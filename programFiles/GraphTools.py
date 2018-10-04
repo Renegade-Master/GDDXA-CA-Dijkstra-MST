@@ -156,3 +156,6 @@ def customFile():
 	generateFile(fileName,int(nodeMin),int(nodeMax),int(connections),int(wtMax))
 
 	return(fileName)
+
+def dijkstra(g,r):
+	print('Calculating Shortest Path Spanning Tree.\n\nStarting from Root: %r...\n' % r)

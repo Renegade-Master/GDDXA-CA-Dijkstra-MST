@@ -28,6 +28,10 @@ class Connection:
 	def edgeWeight(self):
 		return(self.weight)
 
+class Graph:
+	def __init__(self,graph):
+		graph = []
+
 conn1 = Connection(1,2,7)
 
 print('Connection 1')

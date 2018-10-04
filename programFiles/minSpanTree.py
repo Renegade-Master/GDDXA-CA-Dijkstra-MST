@@ -24,8 +24,11 @@ def main():
 		fileName = input('Please enter the name of the test file that you wish to use:\n>>')
 		graph = GraphTools.compileGraph(fileName)
 
-		print('\nThere are %r Nodes in this Graph.  The connections are as follows:\n' % GraphTools.getGraphNodeCount(graph))
+		print('\nThere are %r Nodes in this Graph.\n' % GraphTools.getFileNodeCount(fileName))
+		root = input('Please enter a number between 1 - %r to be the Starting Node:\n>>' % GraphTools.getFileNodeCount(fileName))
+
 		#graph.sort()
 		GraphTools.getGraphData(graph)
+		#GraphTools.dijkstra(graph,root)
 		
 main()
