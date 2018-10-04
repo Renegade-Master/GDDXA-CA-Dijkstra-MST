@@ -25,7 +25,7 @@ def main():
 		graph = GraphTools.compileGraph(fileName)
 
 		print('\nThere are %r Nodes in this Graph.  The connections are as follows:\n' % GraphTools.getGraphNodeCount(graph))
-		graph.sort()
+		#graph.sort()
 		GraphTools.getGraphData(graph)
 		
 main()

@@ -37,6 +37,12 @@ class Connection:
 	def edgeWeight(self):
 		return(self.weight)
 
+# class Graph:
+# 	def __init__(self,graph):
+# 		graph = []
+
+
+
 #################################
 #			FUNCTIONS			#
 #################################
@@ -61,6 +67,9 @@ def compileGraph(fileName):				#EXAMINE LECTURE 5 - PG. 58
 	out.close()
 
 	return(graph)
+
+#def compileGraph2(g):
+
 
 '''	@descr	- Returns the amount of Nodes in a  graph object
 	@param	-
