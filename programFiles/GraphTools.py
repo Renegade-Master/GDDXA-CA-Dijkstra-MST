@@ -2,10 +2,11 @@
 	@creationDate	18/09/2018
 	@description	'Statistics, Algorithms, and AI' Python containing
 					several utilities used in the 'minSpanTree.py' program.
-	@version		1.3.0
+	@version		1.4.0
 	@deadline		12/10/2018
 '''
 
+import math
 import random
 
 #################################
@@ -37,6 +38,35 @@ class Connection:
 	def edgeWeight(self):
 		return(self.weight)
 
+'''	@descr	- An object to represent Dijkstra's Shortest Path Tree.
+	@funct	-
+			listTree	- Prints the contents of the Shortest Path Tree
+'''
+class shortPathTree:
+	def __init__(self):
+		self.vertex = []
+		self.known = []
+		self.distance = []
+		self.via = []
+
+	def setup(self,n):
+		for i in range(n):
+			self.vertex.append(i + 1)
+			self.known.append(0)
+			self.distance.append(math.inf)
+			self.via.append(math.nan)
+
+	def listTree(self,st):
+		i = 0
+		for vtx in self.vertex:
+			if i == (st - 1):
+				print('%r \t N/A \t\t SELF' % self.vertex[i])
+
+			else:
+				print('%r \t %r \t\t %r' % (self.vertex[i],self.distance[i],self.via[i]))
+			i += 1
+		i = 0
+
 '''	@descr	- An object to represent a collection of Connections in a Graph.
 	@param	- 
 				- 
@@ -47,26 +77,16 @@ class Connection:
 '''
 class Graph:
 	def __init__(self,n):
-		self.connections = []
-		self.shortPathTree = []
-		self.distance = []
-		self.weight = 0
 		self.nodes = n
+		self.weight = 0
+		self.connections = []
+		self.shortPathTree = shortPathTree()
+		self.shortPathTree.setup(n)
 
-	'''	@descr	- Return the INTEGER value of the amount of Nodes in the Graph
-	'''
-	def getNodes(self):
-		return(self.nodes)
-
-	'''	@descr	- Add a new Connection to the Graph
-		@param	- 
-				con	- A CONNECTION object
-	'''
 	def addCon(self,con):
 		self.connections.append(con)
+		self.weight += int(con.edgeWeight())
 
-	'''	@descr 	- Prints all connections in this graph object
-	'''
 	def listConns(self):
 		i = 0
 		for obj in self.connections:
@@ -75,6 +95,12 @@ class Graph:
 				'\tNode %r to Node %r '
 				'with a weight of %r\n' % (i,obj.nodeFrom(),obj.nodeTo(),obj.edgeWeight()))
 		i = 0
+	
+	def getNodes(self):
+		return(self.nodes)
+
+	def getWeight(self):
+		return(self.weight)
 
 
 #################################
@@ -98,7 +124,6 @@ def compileGraph(fileName):				#EXAMINE LECTURE 5 - PG. 58
 		w = line.rstrip().split(',')[2]
 		
 		graph.addCon(Connection(u,v,w))
-		#graph.append(Connection(u,v,w))
 
 	out.close()
 
@@ -175,4 +200,9 @@ def customFile():
 
 def dijkstra(g,r):
 	print('\n\n**********************************************************\n')
-	print('Calculating Shortest Path Spanning Tree.\n\nStarting from Root: %r...\n' % r)
+	print(	'Calculating Shortest Path Spanning Tree.\n'
+			'Total Graph weight is: %r' % g.getWeight())
+	print('\nStarting Node: %r' % r)
+	print('\nNODE \t TOTAL DIST \t VIA')
+	#print(g.shortPathTree.listTree(r))
+	print(g.shortPathTree.listTree(r))

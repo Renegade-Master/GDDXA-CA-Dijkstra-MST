@@ -10,7 +10,7 @@ import GraphTools
 
 def main():
 	graph = []
-	root = -1
+	root = -GraphTools.math.inf
 
 	print('**********************************************************')
 	print('Welcome to \'Dijkstra\'s Minimum Spanning Tree\' Algorithm.')
@@ -36,8 +36,6 @@ def main():
 				print('\n\nERROR: Invalid input.\n')
 				invalid = 1
 
-		#graph.sort()
-		graph.listConns()
 		GraphTools.dijkstra(graph,root)
 		
 main()
