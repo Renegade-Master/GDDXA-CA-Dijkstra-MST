@@ -5,11 +5,12 @@
 	@version		1.3.4
 	@deadline		12/10/2018
 '''
+
 import GraphTools
 
 def main():
 	graph = []
-	root = 0
+	root = -1
 
 	print('**********************************************************')
 	print('Welcome to \'Dijkstra\'s Minimum Spanning Tree\' Algorithm.')
@@ -23,9 +24,17 @@ def main():
 	else:
 		fileName = input('Please enter the name of the test file that you wish to use:\n>>')
 		graph = GraphTools.compileGraph(fileName)
-
+		invalid = 1
+		
 		print('\nThere are %r Nodes in this Graph.\n' % graph.getNodes())
-		root = input('Please enter a number between 1 - %r to be the Starting Node:\n>>' % graph.getNodes())
+
+		while (invalid == 1) or ((root < 1) or (root > graph.getNodes())):
+			try:
+				root = int(input('Please enter a number between 1 - %r to be the Starting Node:\n>>' % graph.getNodes()))
+				invalid = 0
+			except:
+				print('\n\nERROR: Invalid input.\n')
+				invalid = 1
 
 		#graph.sort()
 		graph.listConns()
