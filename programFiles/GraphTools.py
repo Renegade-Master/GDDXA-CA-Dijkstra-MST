@@ -2,7 +2,7 @@
 	@creationDate	18/09/2018
 	@description	'Statistics, Algorithms, and AI' Python containing
 					several utilities used in the 'minSpanTree.py' program.
-	@version		1.4.0
+	@version		1.4.1
 	@deadline		12/10/2018
 '''
 
@@ -58,6 +58,8 @@ class shortPathTree:
 
 	def listTree(self,st):
 		i = 0
+		print('\nStarting Node: %r' % st)
+		print('\nNODE \t TOTAL DIST \t VIA')
 		for vtx in self.vertex:
 			if i == (st - 1):
 				print('%r \t N/A \t\t SELF' % self.vertex[i])
@@ -202,7 +204,4 @@ def dijkstra(g,r):
 	print('\n\n**********************************************************\n')
 	print(	'Calculating Shortest Path Spanning Tree.\n'
 			'Total Graph weight is: %r' % g.getWeight())
-	print('\nStarting Node: %r' % r)
-	print('\nNODE \t TOTAL DIST \t VIA')
-	#print(g.shortPathTree.listTree(r))
 	print(g.shortPathTree.listTree(r))
