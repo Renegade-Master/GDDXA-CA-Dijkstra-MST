@@ -61,6 +61,26 @@ print('Connection 2 connects %r to %r with a weight of %r\n' % (arryOfConns[1].n
 
 print('There are %s Connections.' % len(arryOfConns))
 
+print('------------------------')
+print('------------------------')
+print('------------------------')
+
+#################################
+#		ARRAY MAGIC BELOW		#
+#################################
+
+multiArray = [[0 for x in range(3)] for y in range(3)]
+#multiArray = [[]]
+multiArray[1][2] = Connection(2,5,8)
+
+print('%r' % multiArray[1][2].nodeFrom())
+
+#################################
+#		ARRAY MAGIC ABOVE		#
+#################################
+
+
+
 #mixArray = array('i',[Connection(1,2,7),Connection(3,2,4)])
 
 #mixArray = array('u',[deque('1,2,3'),deque('4,5,6'),deque('7,8,9')])
