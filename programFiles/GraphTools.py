@@ -37,9 +37,18 @@ class Connection:
 	def edgeWeight(self):
 		return(self.weight)
 
-# class Graph:
-# 	def __init__(self,graph):
-# 		graph = []
+'''	@descr	- An object to represent a collection of Connections in a Graph.
+	@param	- 
+				- 
+	@funct	-
+				- 
+'''
+class Graph:
+	def __init__(self,graph):
+		self.connections = []
+		self.shortPathTree = []
+		self.distance = []
+		self.weight = 0
 
 
 
