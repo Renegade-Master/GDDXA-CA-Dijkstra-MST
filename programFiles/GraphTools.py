@@ -2,8 +2,11 @@
 	@creationDate	18/09/2018
 	@description	'Statistics, Algorithms, and AI' Python containing
 					several utilities used in the 'minSpanTree.py' program.
-	@version		1.4.1
+	@version		1.4.2
 	@deadline		12/10/2018
+
+	@NOTE - Read through the program carefully.  I may have confused
+			what is a 'list of Connections'.
 '''
 
 import math
@@ -83,20 +86,23 @@ class Graph:
 		self.weight = 0
 		self.connections = []
 		self.shortPathTree = shortPathTree()
-		self.shortPathTree.setup(n)
+		
+	def setup(self):
+		self.shortPathTree.setup(self.nodes)
+		for i in range(self.nodes):
+			lnklst = []
+			self.connections.append(lnklst)
+			#self.connections[i].append(lnklst)
 
 	def addCon(self,con):
-		self.connections.append(con)
+		self.connections[1].append(con)
 		self.weight += int(con.edgeWeight())
 
 	def listConns(self):
-		i = 0
-		for obj in self.connections:
-			i += 1
+		for i in range(len(self.connections)):
 			print('Connection %r connects\n'
 				'\tNode %r to Node %r '
-				'with a weight of %r\n' % (i,obj.nodeFrom(),obj.nodeTo(),obj.edgeWeight()))
-		i = 0
+				'with a weight of %r\n' % (i,self.connections[i].nodeFrom(),i.nodeTo(),i.edgeWeight()))
 	
 	def getNodes(self):
 		return(self.nodes)
@@ -119,6 +125,7 @@ def compileGraph(fileName):				#EXAMINE LECTURE 5 - PG. 58
 	nodes = int(out.readline())
 
 	graph = Graph(nodes)
+	graph.setup()
 
 	for line in out.readlines():
 		u = line.split(',')[0]
@@ -189,9 +196,11 @@ def generateFile(fileName,nodeMin,nodeMax,conns,wt):
 	@retrn	- STRING name of the newly generated file.
 '''
 def customFile():
+	nodeMin = -1
 	print('Please enter the following information to generate your test file...\n\n')
 	fileName = input('Name of custom file:\n>>')
-	nodeMin = input('Minimum Nodes:\n>>')
+	while nodeMin <= 0:
+		nodeMin = input('Minimum Nodes:\n>>')
 	nodeMax = input('Maximum Nodes:\n>>')
 	connections = input('Connection Count:\n>>')
 	wtMax = input('Maximum Path Weight:\n>>')

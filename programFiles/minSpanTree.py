@@ -37,5 +37,8 @@ def main():
 				invalid = 1
 
 		GraphTools.dijkstra(graph,root)
+
+		print('\n---\n')
+		graph.listConns()
 		
 main()
