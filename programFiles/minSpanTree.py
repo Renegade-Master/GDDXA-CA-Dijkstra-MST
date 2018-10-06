@@ -2,7 +2,7 @@
 	@creationDate	18/09/2018
 	@description	'Statistics, Algorithms, and AI' Python implementation of 
 					'Dijkstra's Minimum Spanning Tree' algorithm
-	@version		1.3.3
+	@version		1.3.4
 	@deadline		12/10/2018
 '''
 import GraphTools
@@ -24,11 +24,11 @@ def main():
 		fileName = input('Please enter the name of the test file that you wish to use:\n>>')
 		graph = GraphTools.compileGraph(fileName)
 
-		print('\nThere are %r Nodes in this Graph.\n' % GraphTools.getFileNodeCount(fileName))
-		root = input('Please enter a number between 1 - %r to be the Starting Node:\n>>' % GraphTools.getFileNodeCount(fileName))
+		print('\nThere are %r Nodes in this Graph.\n' % graph.getNodes())
+		root = input('Please enter a number between 1 - %r to be the Starting Node:\n>>' % graph.getNodes())
 
 		#graph.sort()
-		GraphTools.getGraphData(graph)
-		#GraphTools.dijkstra(graph,root)
+		graph.listConns()
+		GraphTools.dijkstra(graph,root)
 		
 main()

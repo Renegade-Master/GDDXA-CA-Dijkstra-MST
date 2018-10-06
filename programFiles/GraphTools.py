@@ -2,7 +2,7 @@
 	@creationDate	18/09/2018
 	@description	'Statistics, Algorithms, and AI' Python containing
 					several utilities used in the 'minSpanTree.py' program.
-	@version		1.2.1
+	@version		1.3.0
 	@deadline		12/10/2018
 '''
 
@@ -18,9 +18,9 @@ import random
 			n2	- The node TO
 			wt	- The connection WEIGHT
 	@funct	-
-			nodeFrom	- INTEGER iterator assigned to the PREVIOUS node
-			nodeTo		- INTEGER iterator assigned to the NEXT node
-			edgeWeight	- INTEGER value assigned to the WEIGHT of this connection
+			nodeFrom	- Returns INTEGER iterator assigned to the PREVIOUS node
+			nodeTo		- Returns INTEGER iterator assigned to the NEXT node
+			edgeWeight	- Returns INTEGER value assigned to the WEIGHT of this connection
 '''
 class Connection:
 	def __init__(self,n1,n2,wt):
@@ -41,15 +41,40 @@ class Connection:
 	@param	- 
 				- 
 	@funct	-
-				- 
+			getNodes	- Return the INTEGER value for the amount of Nodes in this Graph
+			addConn		- Add a new Connection to the Graph
+			listConns	- Prints all Connections in this Graph
 '''
 class Graph:
-	def __init__(self,graph):
+	def __init__(self,n):
 		self.connections = []
 		self.shortPathTree = []
 		self.distance = []
 		self.weight = 0
+		self.nodes = n
 
+	'''	@descr	- Return the INTEGER value of the amount of Nodes in the Graph
+	'''
+	def getNodes(self):
+		return(self.nodes)
+
+	'''	@descr	- Add a new Connection to the Graph
+		@param	- 
+				con	- A CONNECTION object
+	'''
+	def addCon(self,con):
+		self.connections.append(con)
+
+	'''	@descr 	- Prints all connections in this graph object
+	'''
+	def listConns(self):
+		i = 0
+		for obj in self.connections:
+			i += 1
+			print('Connection %r connects\n'
+				'\tNode %r to Node %r '
+				'with a weight of %r\n' % (i,obj.nodeFrom(),obj.nodeTo(),obj.edgeWeight()))
+		i = 0
 
 
 #################################
@@ -65,38 +90,20 @@ def compileGraph(fileName):				#EXAMINE LECTURE 5 - PG. 58
 	fileFormat = out.readline().rstrip()
 	nodes = int(out.readline())
 
-	graph = []
+	graph = Graph(nodes)
 
 	for line in out.readlines():
 		u = line.split(',')[0]
 		v = line.split(',')[1]
 		w = line.rstrip().split(',')[2]
-		graph.append(Connection(u,v,w))
+		
+		graph.addCon(Connection(u,v,w))
+		#graph.append(Connection(u,v,w))
 
 	out.close()
 
 	return(graph)
 
-#def compileGraph2(g):
-
-
-'''	@descr	- Returns the amount of Nodes in a  graph object
-	@param	-
-		graph	- The LIST name of the input graph object.
-	@retrn	- The number of nodes in the graph
-'''
-def getGraphNodeCount(graph):
-	return(len(graph))
-
-'''	@descr 		- Prints all connections in a graph object
-	@param -
-		graph 	- The LIST name of the input graph object.
-'''
-def getGraphData(graph):
-	i = 0
-	for obj in graph:
-		i += 1
-		print('Connection %r connects\n\tNode %r to Node %r with a weight of %r\n' % (i,obj.nodeFrom(),obj.nodeTo(),obj.edgeWeight()))
 
 '''	@descr	- Returns the amount of Nodes in a '.csv' file
 	@param	-
@@ -167,4 +174,5 @@ def customFile():
 	return(fileName)
 
 def dijkstra(g,r):
+	print('\n\n**********************************************************\n')
 	print('Calculating Shortest Path Spanning Tree.\n\nStarting from Root: %r...\n' % r)
