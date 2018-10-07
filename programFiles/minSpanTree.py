@@ -40,7 +40,7 @@ def main():
 		root = 1
 		GraphTools.dijkstra(graph,root)
 
-		print('\n---\n')
+		print('\n--------\nFINISHED\n--------\n')
 		#graph.listConns()
 		
 main()

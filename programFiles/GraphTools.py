@@ -9,6 +9,7 @@
 			what is a 'list of Connections'.
 '''
 
+from operator import attrgetter
 import math
 import random
 
@@ -61,7 +62,7 @@ class shortPathTree:
 
 	def listTree(self,st):
 		i = 0
-		print('\nStarting Node: %r' % st)
+		print('Starting Node: %r' % st)
 		print('\nNODE \t TOTAL DIST \t VIA')
 		for vtx in self.vertex:
 			if i == (st - 1):
@@ -133,6 +134,13 @@ def compileGraph(fileName):				#EXAMINE LECTURE 5 - PG. 58
 		w = line.rstrip().split(',')[2]
 		
 		graph.addCon(Connection(u,v,w))
+
+	print('BEFORE SORTING')
+	graph.listConns()
+	#sorted(graph.connections, key=lambda Connection: graph.connections[0].node1)
+	graph.connections.sort(key=attrgetter('node1'))
+	print('AFTER SORTING')
+	graph.listConns()
 
 	out.close()
 
@@ -210,7 +218,12 @@ def customFile():
 	return(fileName)
 
 def dijkstra(g,r):
+	known = 0
 	print('\n\n**********************************************************\n')
 	print(	'Calculating Shortest Path Spanning Tree.\n'
-			'Total Graph weight is: %r' % g.getWeight())
+			'Total Graph weight is: %r\n' % g.getWeight())
+	print('Default Tree:')
 	print(g.shortPathTree.listTree(r))
+
+#	while known != 1:
+
