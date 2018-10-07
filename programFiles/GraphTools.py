@@ -4,9 +4,6 @@
 					several utilities used in the 'minSpanTree.py' program.
 	@version		1.5.0
 	@deadline		12/10/2018
-
-	@NOTE - Read through the program carefully.  I may have confused
-			what is a 'list of Connections'.
 '''
 
 from operator import attrgetter
