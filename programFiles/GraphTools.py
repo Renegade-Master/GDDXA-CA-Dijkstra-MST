@@ -89,20 +89,20 @@ class Graph:
 		
 	def setup(self):
 		self.shortPathTree.setup(self.nodes)
-		for i in range(self.nodes):
-			lnklst = []
-			self.connections.append(lnklst)
-			#self.connections[i].append(lnklst)
+		# for i in range(self.nodes):
+		# 	lnklst = []
+		# 	self.connections.append(lnklst)
+		# 	self.connections[i].append(lnklst)
 
 	def addCon(self,con):
-		self.connections[1].append(con)
+		self.connections.append(con)
 		self.weight += int(con.edgeWeight())
 
 	def listConns(self):
 		for i in range(len(self.connections)):
 			print('Connection %r connects\n'
 				'\tNode %r to Node %r '
-				'with a weight of %r\n' % (i,self.connections[i].nodeFrom(),i.nodeTo(),i.edgeWeight()))
+				'with a weight of %r\n' % (i,self.connections[i].nodeFrom(),self.connections[i].nodeTo(),self.connections[i].edgeWeight()))
 	
 	def getNodes(self):
 		return(self.nodes)

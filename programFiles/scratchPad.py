@@ -69,11 +69,28 @@ print('------------------------')
 #		ARRAY MAGIC BELOW		#
 #################################
 
-multiArray = [[0 for x in range(3)] for y in range(3)]
-#multiArray = [[]]
-multiArray[1][2] = Connection(2,5,8)
+multiArray = [[0 for x in range(5)] for y in range(2)]
+#multiArray = [[0 for x in range(5)]]
 
-print('%r' % multiArray[1][2].nodeFrom())
+multiArray[0].append(2)
+
+for i in range(len(multiArray)):
+	for j in range(len(multiArray[i])):
+		print('[%r][%r] = %r' % (i,j,multiArray[i][j]))
+
+#multiArray = [[]]
+#multiArray.append(Connection(1,1,1))
+#multiArray[0].append(Connection(2,2,2))
+
+# multiArray[0][0] = Connection(1,5,8)
+# multiArray[0][1] = Connection(2,5,8)
+# multiArray[1][0] = Connection(3,5,8)
+# multiArray[1][1] = Connection(4,5,8)
+
+#print('%r' % multiArray[0][0].nodeFrom())
+#print('%r' % multiArray[1][0].nodeFrom())
+# print('%r' % multiArray[1][0].nodeFrom())
+# print('%r' % multiArray[1][1].nodeFrom())
 
 #################################
 #		ARRAY MAGIC ABOVE		#

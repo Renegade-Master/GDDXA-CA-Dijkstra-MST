@@ -36,9 +36,11 @@ def main():
 				print('\n\nERROR: Invalid input.\n')
 				invalid = 1
 
+		#For testing, 'Start Node' is always == 1
+		root = 1
 		GraphTools.dijkstra(graph,root)
 
 		print('\n---\n')
-		graph.listConns()
+		#graph.listConns()
 		
 main()
