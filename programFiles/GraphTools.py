@@ -265,15 +265,16 @@ def dijkstra(g,r):
 	print('Default Tree:')
 	g.shortPathTree.listTree(r)
 	
-	while known < 5:
+	while known < 10:
 		for i in range(len(g.connections)):
 			newConn = g.getOther(nFr,nWt)
 			duplicate = 0
 
 			if newConn != int(-1):
 				for j in range(len(connected)):
-					if newConn == connected[j]:
+					if newConn == connected[j]:  # IMPROVE - Use 'getOther()' to check two Conns against each other
 						duplicate = 1
+						print('Duplicate found')
 						break
 					else:
 						pass
@@ -283,7 +284,8 @@ def dijkstra(g,r):
 			else:
 				nWt += 1
 				pass
-		nFr += 1
+		#nFr += 1
+		nFr = newConn.nodeTo()
 		connected.sort(key=attrgetter('weight'))
 
 		known += 1
