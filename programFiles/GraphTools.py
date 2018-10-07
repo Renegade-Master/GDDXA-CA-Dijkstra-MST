@@ -2,7 +2,7 @@
 	@creationDate	18/09/2018
 	@description	'Statistics, Algorithms, and AI' Python containing
 					several utilities used in the 'minSpanTree.py' program.
-	@version		1.4.2
+	@version		1.5.0
 	@deadline		12/10/2018
 
 	@NOTE - Read through the program carefully.  I may have confused
@@ -42,6 +42,10 @@ class Connection:
 	def edgeWeight(self):
 		return(self.weight)
 
+	def toString(self):
+		return(	'Node %r to Node %r '
+				'with a weight of %r' % (self.nodeFrom(),self.nodeTo(),self.edgeWeight()))
+
 '''	@descr	- An object to represent Dijkstra's Shortest Path Tree.
 	@funct	-
 			listTree	- Prints the contents of the Shortest Path Tree
@@ -60,10 +64,24 @@ class shortPathTree:
 			self.distance.append(math.inf)
 			self.via.append(math.nan)
 
+	def update(self,sel,idx,val):
+		if sel == 'vtx':
+			self.vertex[idx] = val
+		elif sel == 'kwn':
+			self.known[idx] = val
+		elif sel == 'dst':
+			self.distance[idx] = val
+		elif sel == 'via':
+			self.via[idx] = val
+		else:
+			print('Invalid entry for function: shortPathTree::update()')
+		
+		print('\nTable Update Complete\n\n')
+
 	def listTree(self,st):
 		i = 0
 		print('Starting Node: %r' % st)
-		print('\nNODE \t TOTAL DIST \t VIA')
+		print('NODE \t TOTAL DIST \t VIA')
 		for vtx in self.vertex:
 			if i == (st - 1):
 				print('%r \t N/A \t\t SELF' % self.vertex[i])
@@ -101,15 +119,39 @@ class Graph:
 
 	def listConns(self):
 		for i in range(len(self.connections)):
-			print('Connection %r connects\n'
-				'\tNode %r to Node %r '
-				'with a weight of %r\n' % (i,self.connections[i].nodeFrom(),self.connections[i].nodeTo(),self.connections[i].edgeWeight()))
+			print('Connection %r:\t' % i)
+			print(self.connections[i].toString())
 	
 	def getNodes(self):
 		return(self.nodes)
 
 	def getWeight(self):
 		return(self.weight)
+
+	def getOther(self,n2,wt):
+		print(	'\nChecking for the pair Connection to:\n'
+				'Node: %r\n'
+				'Weight: %r\n' % (n2,wt))
+		i = 0
+		j = 0
+		for z in range(len(self.connections)):
+			if int(self.connections[i].nodeFrom()) == int(n2):
+				if int(self.connections[i].edgeWeight()) == int(wt):
+					#print(self.connections[i].nodeTo())
+					print('MATCH FOUND')
+					return(self.connections[i].nodeTo())
+
+			if int(self.connections[i].nodeTo()) == int(n2):
+				if int(self.connections[i].edgeWeight()) == int(wt):
+					#print(self.connections[i].nodeFrom())
+					print('MATCH FOUND')
+					return(self.connections[i].nodeFrom())
+
+			#print('Connection [%s] did not match' % self.connections[z].toString())
+			i += 1
+			j += 1
+			
+		print('Match not found')
 
 
 #################################
@@ -135,14 +177,8 @@ def compileGraph(fileName):				#EXAMINE LECTURE 5 - PG. 58
 		
 		graph.addCon(Connection(u,v,w))
 
-	print('BEFORE SORTING')
-	graph.listConns()
-	#sorted(graph.connections, key=lambda Connection: graph.connections[0].node1)
-	graph.connections.sort(key=attrgetter('node1'))
-	print('AFTER SORTING')
-	graph.listConns()
-
 	out.close()
+	graph.connections.sort(key=attrgetter('node1'))
 
 	return(graph)
 
@@ -219,11 +255,22 @@ def customFile():
 
 def dijkstra(g,r):
 	known = 0
+	nFr = 0
+	nTo = 0
+	nWt = 0
 	print('\n\n**********************************************************\n')
 	print(	'Calculating Shortest Path Spanning Tree.\n'
 			'Total Graph weight is: %r\n' % g.getWeight())
 	print('Default Tree:')
-	print(g.shortPathTree.listTree(r))
+	g.shortPathTree.listTree(r)
+	g.listConns()
+	print(g.getOther(1,4))
 
-#	while known != 1:
 
+	#for z in range(len(g.connections)):
+		
+
+	#g.shortPathTree.update('kwn',nFr,1)
+	#g.shortPathTree.listTree(r)
+	# while known != 1:
+	# 	nFr
