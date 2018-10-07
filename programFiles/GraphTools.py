@@ -126,23 +126,25 @@ class Graph:
 		return(self.weight)
 
 	def getOther(self,n2,wt):
-		# print(	'\nChecking for the pair Connection to:\n'
-		# 		'Node: %r\n'
-		# 		'Weight: %r\n' % (n2,wt))
+		print(	'\nChecking for the pair Connection to:\n'
+		 		'Node: %r\n'
+		 		'Weight: %r\n' % (n2,wt))
 		i = 0
 		for z in range(len(self.connections)):
+			print('Checking [%s]' % self.connections[i].toString())
 			if int(self.connections[i].nodeFrom()) == int(n2):
 				if int(self.connections[i].edgeWeight()) == int(wt):
-					#print('MATCH FOUND')
-					return(self.connections[i].nodeTo())
+					print('\'TO\' MATCH FOUND')
+					return(self.connections[i])
 
 			if int(self.connections[i].nodeTo()) == int(n2):
 				if int(self.connections[i].edgeWeight()) == int(wt):
-					#print('MATCH FOUND')
-					return(self.connections[i].nodeFrom())
+					print('\'FROM\' MATCH FOUND')
+					return(self.connections[i])
 
+			print('No match')
 			i += 1
-		return(-1)
+		return(int(-1))
 
 
 #################################
@@ -252,8 +254,8 @@ def customFile():
 def dijkstra(g,r):
 	known = 0
 	connected = []
-	nFr = 0
-	nTo = 0
+	nFr = r
+	#nTo = 1
 	nWt = 0
 	print('\n\n**********************************************************\n')
 	print(	'Calculating Shortest Path Spanning Tree.\n'
@@ -262,13 +264,26 @@ def dijkstra(g,r):
 	print('Default Tree:')
 	g.shortPathTree.listTree(r)
 	
-	while known != 1:
-		for i in g.connections:
-			if g.getOther(nFr,nWt) < -1:
-				connected.append()
+	while known < 2:
+		for i in range(len(g.connections)):
+			if g.getOther(nFr,nWt) != int(-1):
+				#connected.append(g.getOther(nFr,nWt))
+				connected.append(g.getOther(nFr,nWt))
+				break				#For testing, Will allow repeated connections (a -> b AND b -> a)
 			else:
 				nWt += 1
-		nFr += 1 
+				pass
+		nFr += 1
+		connected.sort(key=attrgetter('weight'))
+
+		known += 1
+
+	#connected.clear()
+	print('\n\nPrinting Connections found:\n')
+	for con in connected:
+		print(con.toString())
+
+	#print('\n\n%s' % g.getOther(1,4))
 
 	#g.listConns()
 	#print(g.getOther(1,4))
