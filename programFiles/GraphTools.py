@@ -258,6 +258,9 @@ def dijkstra(g,r):
 	#nTo = 1
 	nWt = 0
 	newConn = 0
+	
+	g.shortPathTree.update('kwn',0,1)
+
 	print('\n\n**********************************************************\n')
 	print(	'Calculating Shortest Path Spanning Tree.\n'
 			'Total Graph weight is: %r\n' % g.getWeight())
@@ -265,6 +268,7 @@ def dijkstra(g,r):
 	print('Default Tree:')
 	g.shortPathTree.listTree(r)
 	
+	stage = 1
 	while known < 10:
 		for i in range(len(g.connections)):
 			newConn = g.getOther(nFr,nWt)
@@ -278,14 +282,18 @@ def dijkstra(g,r):
 						break
 					else:
 						pass
+				
 				if duplicate != 1:
 					connected.append(newConn)
-				#break				#For testing, Will allow repeated connections (a -> b AND b -> a)
 			else:
 				nWt += 1
 				pass
-		#nFr += 1
-		nFr = newConn.nodeTo()
+		
+		# for j in range(len(connected)):		#Check to see if path is shorter
+		# 	if connected[j].edgeWeight() < 
+
+		nFr += 1
+		#nFr = newConn.nodeTo()
 		connected.sort(key=attrgetter('weight'))
 
 		known += 1
