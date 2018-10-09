@@ -105,10 +105,6 @@ class Graph:
 		
 	def setup(self):
 		self.shortPathTree.setup(self.nodes)
-		# for i in range(self.nodes):
-		# 	lnklst = []
-		# 	self.connections.append(lnklst)
-		# 	self.connections[i].append(lnklst)
 
 	def addCon(self,con):
 		self.connections.append(con)
@@ -171,9 +167,9 @@ def compileGraph(fileName):				#EXAMINE LECTURE 5 - PG. 58
 		graph.addCon(Connection(u,v,w))
 
 	out.close()
-	#graph.listConns()
+	#graph.listConns() #Before sorting
 	graph.connections.sort(key=attrgetter('node1','node2'))
-	#graph.listConns()
+	#graph.listConns() #After sorting
 
 	return(graph)
 
@@ -314,10 +310,4 @@ def dijkstra(g,r):
 
 	#print('\n\n%s' % g.getOther(1,4))
 
-	#g.listConns()
-	#print(g.getOther(1,4))
-	#for z in range(len(g.connections)):
-	#g.shortPathTree.update('kwn',nFr,1)
-	#g.shortPathTree.listTree(r)
-	# while known != 1:
-	# 	nFr
+	
