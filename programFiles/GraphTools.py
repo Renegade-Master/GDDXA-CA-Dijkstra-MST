@@ -265,43 +265,43 @@ def dijkstra(g,r):
 	g.shortPathTree.listTree(r)
 	
 	stage = 1
-	while known < 10:
+	while known < 5:
 		for i in range(len(g.connections)):
-			newConn = g.getOther(nFr,nWt)
+			newConn = g.getOther(nFr,nWt)			# Check for a connection with the search terms
 			duplicate = 0
 
-			if newConn != int(-1):
-				for j in range(len(connected)):
-					if newConn == connected[j]:  # IMPROVE - Use 'getOther()' to check two Conns against each other
-						duplicate = 1
+			if newConn != int(-1):					# if(newConn IS a point)
+				for j in range(len(connected)):		# Iterate through connected[]
+					if newConn == connected[j]:  	# IMPROVE - Use 'getOther()' to check two Conns against each other
+						duplicate = 1				# Set duplicate check
 						print('Duplicate found')
-						break
+						break						# Exit this loop
 					else:
-						pass
+						pass						# Check for duplicate in the next position
 				
-				if duplicate != 1:
-					connected.append(newConn)
+				if duplicate != 1:					# If it a new node
+					connected.append(newConn)		# Append it to the list
 			else:
-				nWt += 1
-				pass
+				nWt += 1							# Increment search weight
+				#pass
 		
-		# for j in range(len(connected)):		#Check to see if path is shorter
+		# for j in range(len(connected)):			#Check to see if path is shorter
 		# 	if connected[j].edgeWeight() < 
 
-		nFr += 1
+		nFr += 1									# Increment search nodeFrom
 		#nFr = newConn.nodeTo()
-		connected.sort(key=attrgetter('weight'))
+		connected.sort(key=attrgetter('weight'))	# Sort connected[] by weight
 
-		known += 1
+		known += 1									# 
 
 		#Check for finalised tree
 		for i in g.shortPathTree.known:
-			if g.shortPathTree.known[i] == 1:
+			if g.shortPathTree.known[i] == 1:		# If the Connection is fixed
 				pass
-			else:
-				break
+			else:									# If there is an indefinite Connection
+				break								# Search again
 			
-			known = 1
+			#known = 1								# Set known to '1'.  Tree complete
 
 	#connected.clear()
 	print('\n\nPrinting Connections found:\n')
