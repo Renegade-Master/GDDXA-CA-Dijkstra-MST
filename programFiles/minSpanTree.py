@@ -3,7 +3,7 @@
 	@description	'Statistics, Algorithms, and AI' Python implementation of 
 					'Dijkstra's Minimum Spanning Tree' algorithm
 	@version		1.3.4
-	@deadline		12/10/2018
+	@deadline		14/10/2018
 '''
 
 import GraphTools

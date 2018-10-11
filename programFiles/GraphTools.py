@@ -3,7 +3,7 @@
 	@description	'Statistics, Algorithms, and AI' Python containing
 					several utilities used in the 'minSpanTree.py' program.
 	@version		1.5.1
-	@deadline		12/10/2018
+	@deadline		14/10/2018
 '''
 
 from operator import attrgetter
