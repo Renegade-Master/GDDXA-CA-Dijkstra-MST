@@ -266,7 +266,8 @@ def customFile():
 def dijkstra(g,r):
 	known = 0
 	connected = []
-	nFr = r
+	nFr = []									# Array to maintain 'awareness'
+	nFr.append(r)
 	#nTo = 1
 	nWt = 0
 	newConn = 0
@@ -283,28 +284,30 @@ def dijkstra(g,r):
 	stage = 1
 	while known < 1:
 		for i in range(len(g.connections)):
-			newConn = g.getOther(nFr,nWt)			# Check for a connection with the search terms
-			duplicate = 0
+			for j in range(len(nFr)):	
+				newConn = g.getOther(nFr[j],nWt)			# Check for a connection with the search terms
+				duplicate = 0
 
-			if newConn != int(-1):					# if(newConn IS a point)
-				for j in range(len(connected)):		# Iterate through connected[]
-					if newConn == connected[j]:  	# IMPROVE - Use 'getOther()' to check two Conns against each other
-						duplicate = 1				# Set duplicate check
-						print('Duplicate found')
-						break						# Exit this loop
-					else:
-						pass						# Check for duplicate in the next position
-				
-				if duplicate != 1:					# If it a new node
-					connected.append(newConn)		# Append it to the list
-			else:
-				nWt += 1							# Increment search weight
-				#pass
+				if newConn != int(-1):					# if(newConn IS a point)
+					for k in range(len(connected)):		# Iterate through connected[]
+						if newConn == connected[k]:  	# IMPROVE - Use 'getOther()' to check two Conns against each other
+							duplicate = 1				# Set duplicate check
+							print('Duplicate found')
+							break						# Exit this loop
+						else:
+							pass						# Check for duplicate in the next position
+					
+					if duplicate != 1:					# If it a new node
+						connected.append(newConn)		# Append it to the list
+				else:
+					nWt += 1							# Increment search weight
+					#pass
 		
 		# for j in range(len(connected)):			# Check to see if path is shorter
 		# 	if connected[j].edgeWeight() < 
 
-		nFr += 1									# Increment search nodeFrom
+		#nFr += 1									# Increment search nodeFrom
+		nFr.append(newConn.)
 		#nFr = newConn.nodeTo()
 		connected.sort(key=attrgetter('weight'))	# Sort connected[] by weight
 
@@ -315,6 +318,7 @@ def dijkstra(g,r):
 			if g.shortPathTree.known[i] == 1:		# If the Connection is fixed
 				pass
 			else:									# If there is an indefinite Connection
+				nWt = 0
 				break								# Search again
 			
 			#known = 1								# Set known to '1'.  Tree complete
