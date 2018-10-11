@@ -45,6 +45,5 @@ def main():
 		GraphTools.dijkstra(graph,root)
 
 		print('\n--------\nFINISHED\n--------\n')
-		#graph.listConns()
 		
 main()

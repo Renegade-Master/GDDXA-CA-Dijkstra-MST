@@ -100,6 +100,7 @@ class Graph:
 	def __init__(self,n):
 		self.nodes = n
 		self.weight = 0
+		self.maxWeight = -1
 		self.connections = []
 		self.shortPathTree = shortPathTree()
 		
@@ -120,6 +121,19 @@ class Graph:
 
 	def getWeight(self):
 		return(self.weight)
+
+	def calcMaxWeight(self):
+		total = [];
+		for con in self.connections:
+			total.append(con.edgeWeight())
+
+		total.sort()
+		self.maxWeight = total[len(total) - 1]
+
+	def getMaxWeight(self):
+		if self.maxWeight == -1:
+			self.calcMaxWeight()
+		return(self.maxWeight)
 
 	def getOther(self,n2,wt):
 		print(	'\nChecking for the pair Connection to:\n'
@@ -245,7 +259,9 @@ def customFile():
 	return(fileName)
 
 '''	@descr	- Read in data to create a new random data file.
-	
+	@param 	-
+		g 	- A Graph object
+		r 	- The 'root' node
 '''
 def dijkstra(g,r):
 	known = 0
@@ -265,7 +281,7 @@ def dijkstra(g,r):
 	g.shortPathTree.listTree(r)
 	
 	stage = 1
-	while known < 5:
+	while known < 1:
 		for i in range(len(g.connections)):
 			newConn = g.getOther(nFr,nWt)			# Check for a connection with the search terms
 			duplicate = 0
@@ -285,7 +301,7 @@ def dijkstra(g,r):
 				nWt += 1							# Increment search weight
 				#pass
 		
-		# for j in range(len(connected)):			#Check to see if path is shorter
+		# for j in range(len(connected)):			# Check to see if path is shorter
 		# 	if connected[j].edgeWeight() < 
 
 		nFr += 1									# Increment search nodeFrom
@@ -309,5 +325,3 @@ def dijkstra(g,r):
 		print(con.toString())
 
 	#print('\n\n%s' % g.getOther(1,4))
-
-	
