@@ -258,6 +258,16 @@ def customFile():
 
 	return(fileName)
 
+def isNew(newCon,g[]):
+	for i in range(len(g)):
+		if (newCon.nodeFrom() == g[i].nodeTo() and newCon.edgeWeight() == g[i].edgeWeight() or
+			newCon.nodeFrom() == g[i].nodeFrom() and newCon.edgeWeight() == g[i].edgeWeight() or
+			newCon.nodeTo() == g[i].nodeTo() and newCon.edgeWeight() == g[i].edgeWeight()):
+				return(int(-1))
+		else:
+			return(int(0))
+
+
 '''	@descr	- Read in data to create a new random data file.
 	@param 	-
 		g 	- A Graph object
@@ -307,7 +317,12 @@ def dijkstra(g,r):
 		# 	if connected[j].edgeWeight() < 
 
 		#nFr += 1									# Increment search nodeFrom
-		nFr.append(newConn.)
+
+		for k in range(len(connected)):				# Iterate through connected[]
+			if newConn == connected[k]:
+				pass
+			else:
+				nFr.append(newConn.)
 		#nFr = newConn.nodeTo()
 		connected.sort(key=attrgetter('weight'))	# Sort connected[] by weight
 
