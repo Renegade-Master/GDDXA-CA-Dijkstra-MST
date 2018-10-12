@@ -258,13 +258,14 @@ def customFile():
 
 	return(fileName)
 
-def isNew(newCon,g[]):
-	for i in range(len(g)):
-		if (newCon.nodeFrom() == g[i].nodeTo() and newCon.edgeWeight() == g[i].edgeWeight() or
-			newCon.nodeFrom() == g[i].nodeFrom() and newCon.edgeWeight() == g[i].edgeWeight() or
-			newCon.nodeTo() == g[i].nodeTo() and newCon.edgeWeight() == g[i].edgeWeight()):
+def isNew(newCon,ary = []):
+	for i in range(len(ary)):
+		if (newCon.nodeFrom() == ary[i].nodeTo() and newCon.edgeWeight() == ary[i].edgeWeight() or
+			newCon.nodeFrom() == ary[i].nodeFrom() and newCon.edgeWeight() == ary[i].edgeWeight() or
+			newCon.nodeTo() == ary[i].nodeTo() and newCon.edgeWeight() == ary[i].edgeWeight()):
 				return(int(-1))
 		else:
+			print('Duplicate found')
 			return(int(0))
 
 
@@ -292,20 +293,19 @@ def dijkstra(g,r):
 	g.shortPathTree.listTree(r)
 	
 	stage = 1
-	while known < 1:
+	while known < 2:
 		for i in range(len(g.connections)):
 			for j in range(len(nFr)):	
 				newConn = g.getOther(nFr[j],nWt)		# Check for a connection with the search terms
 				duplicate = 0
 
 				if newConn != int(-1):					# if(newConn IS a point)
-					for k in range(len(connected)):		# Iterate through connected[]
-						if newConn == connected[k]:  	# IMPROVE - Use 'getOther()' to check two Conns against each other
+					if isNew(newConn,connected) == int(-1):
 							duplicate = 1				# Set duplicate check
 							print('Duplicate found')
-							break						# Exit this loop
-						else:
-							pass						# Check for duplicate in the next position
+							#break						# Exit this loop
+					else:
+						pass						# Check for duplicate in the next position
 					
 					if duplicate != 1:					# If it a new node
 						connected.append(newConn)		# Append it to the list
@@ -318,11 +318,11 @@ def dijkstra(g,r):
 
 		#nFr += 1									# Increment search nodeFrom
 
-		for k in range(len(connected)):				# Iterate through connected[]
-			if newConn == connected[k]:
-				pass
-			else:
-				nFr.append(newConn.)
+		#for k in range(len(connected)):				# Iterate through connected[]
+		#	if newConn == connected[k]:
+		#		pass
+		#	else:
+		#		nFr.append(newConn.)
 		#nFr = newConn.nodeTo()
 		connected.sort(key=attrgetter('weight'))	# Sort connected[] by weight
 
