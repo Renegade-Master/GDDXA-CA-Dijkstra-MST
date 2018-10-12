@@ -161,6 +161,21 @@ class Graph:
 #			FUNCTIONS			#
 #################################
 
+'''	@descr	- Check to see if a connection is already in a list
+	@retrn	- BOOLEAN [integer].  '-1' means that the connection is a duplicate
+'''
+def isNewConn(newCon,ary = []):
+	for i in range(len(ary)):
+		if (newCon.nodeFrom() == ary[i].nodeTo() and newCon.edgeWeight() == ary[i].edgeWeight() or
+			newCon.nodeFrom() == ary[i].nodeFrom() and newCon.edgeWeight() == ary[i].edgeWeight()):# or
+			#newCon.nodeTo() == ary[i].nodeTo() and newCon.edgeWeight() == ary[i].edgeWeight()):
+				print('Duplicate found')
+				print('%s == %s' % (newCon.toString(),ary[i].toString()))
+				return(int(-1))
+		else:
+			print('%s != %s' % (newCon.toString(),ary[i].toString()))
+			return(int(0))
+
 '''	@descr	- Reads a '.csv' file and creates a 'Graph' object based on the contents.
 	@param	-
 		fileName 	- The STRING name of the name of the input '.csv' file.
@@ -258,17 +273,6 @@ def customFile():
 
 	return(fileName)
 
-def isNew(newCon,ary = []):
-	for i in range(len(ary)):
-		if (newCon.nodeFrom() == ary[i].nodeTo() and newCon.edgeWeight() == ary[i].edgeWeight() or
-			newCon.nodeFrom() == ary[i].nodeFrom() and newCon.edgeWeight() == ary[i].edgeWeight() or
-			newCon.nodeTo() == ary[i].nodeTo() and newCon.edgeWeight() == ary[i].edgeWeight()):
-				return(int(-1))
-		else:
-			print('Duplicate found')
-			return(int(0))
-
-
 '''	@descr	- Read in data to create a new random data file.
 	@param 	-
 		g 	- A Graph object
@@ -280,6 +284,7 @@ def dijkstra(g,r):
 	nFr = []									# Array to maintain 'awareness'
 	nFr.append(r)
 	#nTo = 1
+	#nFr = 1
 	nWt = 0
 	newConn = 0
 	
@@ -293,36 +298,39 @@ def dijkstra(g,r):
 	g.shortPathTree.listTree(r)
 	
 	stage = 1
-	while known < 2:
-		for i in range(len(g.connections)):
-			for j in range(len(nFr)):	
-				newConn = g.getOther(nFr[j],nWt)		# Check for a connection with the search terms
+	while known < 10:
+		for i in range(len(g.connections)):						# For every Connection
+			for j in range(len(nFr)):							# For all added points
+				newConn = g.getOther(nFr[j],nWt)				# Check for a connection with the search terms
 				duplicate = 0
 
-				if newConn != int(-1):					# if(newConn IS a point)
-					if isNew(newConn,connected) == int(-1):
-							duplicate = 1				# Set duplicate check
-							print('Duplicate found')
-							#break						# Exit this loop
+				if newConn != int(-1):							# if(newConn IS a point)
+					if isNewConn(newConn,connected) == int(-1):	# if newCon is in fact NOT NEW
+							duplicate = 1						# Set duplicate check
+							#print('Duplicate found')
+							#break								# Exit this loop
 					else:
-						pass						# Check for duplicate in the next position
+						pass									# Check for duplicate in the next position
 					
-					if duplicate != 1:					# If it a new node
-						connected.append(newConn)		# Append it to the list
+					if duplicate != 1:							# If it a new node
+						connected.append(newConn)				# Append it to the list
 				else:
-					nWt += 1							# Increment search weight
+					nWt += 1									# Increment search weight
 					#pass
+			# END FOR
+		# END FOR
 		
 		# for j in range(len(connected)):			# Check to see if path is shorter
 		# 	if connected[j].edgeWeight() < 
 
 		#nFr += 1									# Increment search nodeFrom
 
-		#for k in range(len(connected)):				# Iterate through connected[]
-		#	if newConn == connected[k]:
-		#		pass
-		#	else:
-		#		nFr.append(newConn.)
+		if isNewConn(newConn,connected) != int(-1):
+			nFr.append(int(newConn.nodeTo()))
+			pass
+		else:
+			pass
+			#nFr.append(int(newConn.nodeFrom()))
 		#nFr = newConn.nodeTo()
 		connected.sort(key=attrgetter('weight'))	# Sort connected[] by weight
 
@@ -333,14 +341,19 @@ def dijkstra(g,r):
 			if g.shortPathTree.known[i] == 1:		# If the Connection is fixed
 				pass
 			else:									# If there is an indefinite Connection
+				print("Search begins again!")
 				nWt = 0
 				break								# Search again
 			
 			#known = 1								# Set known to '1'.  Tree complete
+	# END WHILE
 
 	#connected.clear()
 	print('\n\nPrinting Connections found:\n')
 	for con in connected:
 		print(con.toString())
+
+	for i in range(len(nFr)):
+		print(nFr[i])
 
 	#print('\n\n%s' % g.getOther(1,4))
