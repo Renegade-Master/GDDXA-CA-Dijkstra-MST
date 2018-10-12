@@ -137,8 +137,8 @@ class Graph:
 
 	def getOther(self,n2,wt):
 		print(	'\nChecking for the pair Connection to:\n'
-		 		'Node: %r\n'
-		 		'Weight: %r\n' % (n2,wt))
+				'Node: %r\n'
+				'Weight: %r\n' % (n2,wt))
 		i = 0
 		for z in range(len(self.connections)):
 			print('Checking [%s]' % self.connections[i].toString())
@@ -285,7 +285,7 @@ def dijkstra(g,r):
 	while known < 1:
 		for i in range(len(g.connections)):
 			for j in range(len(nFr)):	
-				newConn = g.getOther(nFr[j],nWt)			# Check for a connection with the search terms
+				newConn = g.getOther(nFr[j],nWt)		# Check for a connection with the search terms
 				duplicate = 0
 
 				if newConn != int(-1):					# if(newConn IS a point)
