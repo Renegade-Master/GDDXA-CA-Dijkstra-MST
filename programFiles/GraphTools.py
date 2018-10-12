@@ -166,8 +166,8 @@ class Graph:
 '''
 def isNewConn(newCon,ary = []):
 	for i in range(len(ary)):
-		if (newCon.nodeFrom() == ary[i].nodeTo() and newCon.edgeWeight() == ary[i].edgeWeight() or
-			newCon.nodeFrom() == ary[i].nodeFrom() and newCon.edgeWeight() == ary[i].edgeWeight()):# or
+		if ((int(newCon.nodeFrom()) == int(ary[i].nodeTo()) and int(newCon.edgeWeight()) == int(ary[i].edgeWeight())) or
+			(int(newCon.nodeTo()) == int(ary[i].nodeFrom()) and int(newCon.edgeWeight()) == int(ary[i].edgeWeight()))):# or
 			#newCon.nodeTo() == ary[i].nodeTo() and newCon.edgeWeight() == ary[i].edgeWeight()):
 				print('Duplicate found')
 				print('%s == %s' % (newCon.toString(),ary[i].toString()))
@@ -285,7 +285,7 @@ def dijkstra(g,r):
 	nFr.append(r)
 	#nTo = 1
 	#nFr = 1
-	nWt = 0
+	nWt = 1
 	newConn = 0
 	
 	g.shortPathTree.update('kwn',0,1)
@@ -312,16 +312,17 @@ def dijkstra(g,r):
 					
 					if duplicate != 1:							# If it a new node
 						connected.append(newConn)				# Append it to the list
+						nFr.append(int(newConn.nodeTo()))
 				else:
 					nWt += 1									# Increment search weight
 			# END FOR
 		# END FOR
 
-		if isNewConn(newConn,connected) != int(-1):
-			print('Adding node %s to awareness range' % newConn.nodeTo())
-			nFr.append(int(newConn.nodeTo()))
-		else:
-			print('Connection already known')
+		#if isNewConn(newConn,connected) != int(-1):
+		#	print('Adding node %s to awareness range' % newConn.nodeTo())
+		#	nFr.append(int(newConn.nodeTo()))
+		#else:
+		#	print('Connection already known')
 		
 		connected.sort(key=attrgetter('weight'))	# Sort connected[] by weight
 
@@ -333,7 +334,7 @@ def dijkstra(g,r):
 				pass
 			else:									# If there is an indefinite Connection
 				print("Search begins again!")
-				nWt = 0
+				nWt = 1
 				break								# Search again
 			
 			#known = 1								# Set known to '1'.  Tree complete
