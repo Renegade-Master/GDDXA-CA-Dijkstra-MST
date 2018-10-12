@@ -307,6 +307,8 @@ def dijkstra(g,r):
 				if newConn != int(-1):							# if(newConn IS a point)
 					if isNewConn(newConn,connected) == int(-1):	# if newCon is in fact NOT NEW
 							duplicate = 1						# Set duplicate check
+							#print('Duplicate found')
+							#break								# Exit this loop
 					else:
 						pass									# Check for duplicate in the next position
 					
@@ -314,15 +316,23 @@ def dijkstra(g,r):
 						connected.append(newConn)				# Append it to the list
 				else:
 					nWt += 1									# Increment search weight
+					#pass
 			# END FOR
 		# END FOR
+		
+		# for j in range(len(connected)):			# Check to see if path is shorter
+		# 	if connected[j].edgeWeight() < 
+
+		#nFr += 1									# Increment search nodeFrom
 
 		if isNewConn(newConn,connected) != int(-1):
 			print('Adding node %s to awareness range' % newConn.nodeTo())
 			nFr.append(int(newConn.nodeTo()))
+			#pass
 		else:
 			print('Connection already known')
-		
+			#nFr.append(int(newConn.nodeFrom()))
+		#nFr = newConn.nodeTo()
 		connected.sort(key=attrgetter('weight'))	# Sort connected[] by weight
 
 		known += 1									# 
@@ -346,3 +356,5 @@ def dijkstra(g,r):
 
 	for i in range(len(nFr)):
 		print(nFr[i])
+
+	#print('\n\n%s' % g.getOther(1,4))
