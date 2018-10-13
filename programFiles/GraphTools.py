@@ -331,6 +331,8 @@ def dijkstra(g,r):
 				else:											# newConnection is invalid
 					nWt += 1
 
+				
+
 		known += 1
 
 
@@ -377,13 +379,13 @@ def dijkstra(g,r):
 	#	known += 1									# 
 
 		#Check for finalised tree
-		for i in g.shortPathTree.known:
-			if g.shortPathTree.known[i] == 1:		# If the Connection is fixed
-				pass
-			else:									# If there is an indefinite Connection
-				print("Search begins again!")
-				nWt = 1
-				break								# Search again
+		#for i in g.shortPathTree.known:
+		#	if g.shortPathTree.known[i] == 1:		# If the Connection is fixed
+		#		pass
+		#	else:									# If there is an indefinite Connection
+		#		print("Search begins again!")
+		#		nWt = 1
+		#		break								# Search again
 			
 			#known = 1								# Set known to '1'.  Tree complete
 	# END WHILE

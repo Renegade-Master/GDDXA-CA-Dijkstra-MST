@@ -22,12 +22,12 @@ def main():
 	#usrInp = input('Do you want to generate your own randomised file? Y/N:\n>>')
 	
 	if usrInp == 'y' or usrInp == 'Y':
-		print('You have created a file called \'%s.csv\' in the local directory.\n\n' % GraphTools.customFile())
+		print('You have created a file called \'%s.csv\' in the \'testFiles\' directory.\n\n' % GraphTools.customFile())
 		main()
 
 	else:
 		#fileName = input('Please enter the name of the test file that you wish to use:\n>>')
-		graph = GraphTools.compileGraph(fileName)
+		graph = GraphTools.compileGraph('testFiles\\%s' % fileName)
 		invalid = 1
 		
 		print('\nThere are %r Nodes in this Graph.\n' % graph.getNodes())
