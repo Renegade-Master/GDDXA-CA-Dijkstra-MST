@@ -73,7 +73,7 @@ class shortPathTree:
 		else:
 			print('Invalid entry for function: shortPathTree::update()')
 		
-		print('\nTable Update Complete\n\n')
+		print('\nTable Update Complete\n')
 
 	def listTree(self,st):
 		i = 0
@@ -125,7 +125,6 @@ class Graph:
 	def calcMaxWeight(self):
 		total = [];
 		for con in self.connections:
-			print(con.toString())
 			total.append(con.edgeWeight())
 		
 		self.maxWeight = max(total)
@@ -311,35 +310,38 @@ def dijkstra(g,r):
 	
 	g.shortPathTree.update('kwn',0,1)
 
-	print('\n\n**********************************************************\n')
+	print('\n**********************************************************\n')
 	print(	'Calculating Shortest Path Spanning Tree.\n'
+			'There are %r Nodes in this Graph.\n'
 			'Max Graph Weight is: %r.\n'
-			'Total Graph weight is: %r.\n' % (g.getMaxWeight(),g.getWeight()))
+			'Total Graph weight is: %r.\n' % (g.getNodes(),g.getMaxWeight(),g.getWeight()))
 	
 	print('Default Tree:')
 	g.shortPathTree.listTree(r)
 	
 	#while known != 1:
-	while known < 1:
+	while known < 4:
 		for i in range(len(g.connections)):						# For every connection
-			duplicate = 0
-			for j in range(len(nFr)):							#
+			#duplicate = 0
+			for j in range(len(nFr)):							# For every adjacent Node 
+				duplicate = 0
 				newConn = g.getOther(nFr[j],nWt)
 
 				if newConn != int(-1):							# if newConnection is a Point in the Graph
 					if isNewConn(newConn,connected) == int(-1):	# If newConnection has already been added
 						duplicate = 1
+						nWt += 1
 
 					if duplicate == 0:							# if newConnection has not already been added
 						connected.append(newConn)
-						nFr.append(int(newConn.nodeTo()))
+						nFr.append(newConn.nodeTo())
 
 				else:											# newConnection is invalid
 					if nWt < g.getMaxWeight():
 						nWt += 1
 			print('\n---')
 			for con in connected:
-				print(con.toString()) # Should report back '4, 2, 3' after first run
+				print(con.toString()) 							# Should report back '1, 4, 2, 3' after first run
 			print('---\n')
 			calcPaths(g.shortPathTree,connected)
 

@@ -28,10 +28,8 @@ def main():
 	else:
 		#fileName = input('Please enter the name of the test file that you wish to use:\n>>')
 		graph = GraphTools.compileGraph('testFiles\\%s' % fileName)
-		invalid = 1
 		
-		print('\nThere are %r Nodes in this Graph.\n' % graph.getNodes())
-
+		#invalid = 1
 		# while (invalid == 1) or ((root < 1) or (root > graph.getNodes())):
 		# 	try:
 		# 		root = int(input('Please enter a number between 1 - %r to be the Starting Node:\n>>' % graph.getNodes()))
