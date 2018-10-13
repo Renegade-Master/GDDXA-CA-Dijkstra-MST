@@ -346,6 +346,7 @@ def dijkstra(g,r):
 						if nWt < g.getMaxWeight():
 							nWt += 1
 					calcPaths(g.shortPathTree,connected)
+				nWt = 1
 			print('\n---')
 			for con in connected:
 				print(con.toString()) 							# Should report back '1, 4, 2, 3' after first run
