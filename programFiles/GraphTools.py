@@ -31,13 +31,13 @@ class Connection:
 		self.weight = wt
 
 	def nodeFrom(self):
-		return(self.node1)
+		return(int(self.node1))
 
 	def nodeTo(self):
-		return(self.node2)
+		return(int(self.node2))
 
 	def edgeWeight(self):
-		return(self.weight)
+		return(int(self.weight))
 
 	def toString(self):
 		return(	'Node %r to Node %r '
@@ -77,7 +77,7 @@ class shortPathTree:
 
 	def listTree(self,st):
 		i = 0
-		print('Starting Node: %r' % st)
+		print('\nStarting Node: %r' % st)
 		print('NODE \t TOTAL DIST \t VIA')
 		for vtx in self.vertex:
 			if i == (st - 1):
@@ -125,10 +125,10 @@ class Graph:
 	def calcMaxWeight(self):
 		total = [];
 		for con in self.connections:
+			print(con.toString())
 			total.append(con.edgeWeight())
-
-		total.sort()
-		self.maxWeight = total[len(total) - 1]
+		
+		self.maxWeight = max(total)
 
 	def getMaxWeight(self):
 		if self.maxWeight == -1:
@@ -190,6 +190,12 @@ def isNewNode(newNd,ary = []):
 			print('Node %r != Node %r' % (newNd,ary[i]))
 			
 	return(int(0))
+
+'''	@descr	- Check to see if the Shortest Path Tree can be improved
+	@retrn	- None
+'''
+def calcPaths(spt,ary = []):
+	pass
 
 '''	@descr	- Reads a '.csv' file and creates a 'Graph' object based on the contents.
 	@param	-
@@ -307,17 +313,17 @@ def dijkstra(g,r):
 
 	print('\n\n**********************************************************\n')
 	print(	'Calculating Shortest Path Spanning Tree.\n'
-			'Total Graph weight is: %r\n' % g.getWeight())
+			'Max Graph Weight is: %r.\n'
+			'Total Graph weight is: %r.\n' % (g.getMaxWeight(),g.getWeight()))
 	
 	print('Default Tree:')
 	g.shortPathTree.listTree(r)
 	
 	#while known != 1:
-	while known < 5:
-		for i in range(len(g.connections)):
+	while known < 1:
+		for i in range(len(g.connections)):						# For every connection
 			duplicate = 0
-			for j in range(len(nFr)):
-				#duplicate = 0
+			for j in range(len(nFr)):							#
 				newConn = g.getOther(nFr[j],nWt)
 
 				if newConn != int(-1):							# if newConnection is a Point in the Graph
@@ -329,9 +335,13 @@ def dijkstra(g,r):
 						nFr.append(int(newConn.nodeTo()))
 
 				else:											# newConnection is invalid
-					nWt += 1
-
-				
+					if nWt < g.getMaxWeight():
+						nWt += 1
+			print('\n---')
+			for con in connected:
+				print(con.toString()) # Should report back '4, 2, 3' after first run
+			print('---\n')
+			calcPaths(g.shortPathTree,connected)
 
 		known += 1
 

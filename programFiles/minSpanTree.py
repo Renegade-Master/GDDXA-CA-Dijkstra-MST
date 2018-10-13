@@ -43,6 +43,7 @@ def main():
 		#For testing, 'Start Node' is always == 1
 		root = 1
 		GraphTools.dijkstra(graph,root)
+		graph.shortPathTree.listTree(root)
 
 		print('\n--------\nFINISHED\n--------\n')
 		
