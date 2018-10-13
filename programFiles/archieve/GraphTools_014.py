@@ -320,37 +320,30 @@ def dijkstra(g,r):
 	g.shortPathTree.listTree(r)
 	
 	#while known != 1:
-	while known < 1:
-		print('STARTING MAIN LOOP')
+	while known < 4:
 		for i in range(len(g.connections)):						# For every connection
-			print('STARTING CONNECTIONS LOOP')
 			#duplicate = 0
 			for j in range(len(nFr)):							# For every adjacent Node 
-				print('STARTING KNOWN NODES LOOP')
-				for k in range(g.getMaxWeight()):
-					print('STARTING WEIGHT LOOP')
-					duplicate = 0
-					newConn = g.getOther(nFr[j],nWt)
+				duplicate = 0
+				newConn = g.getOther(nFr[j],nWt)
 
-					if newConn != int(-1):							# if newConnection is a Point in the Graph
-						if isNewConn(newConn,connected) == int(-1):	# If newConnection has already been added
-							duplicate = 1
-							nWt += 1
+				if newConn != int(-1):							# if newConnection is a Point in the Graph
+					if isNewConn(newConn,connected) == int(-1):	# If newConnection has already been added
+						duplicate = 1
+						nWt += 1
 
-						if duplicate == 0:							# if newConnection has not already been added
-							connected.append(newConn)
-							nFr.append(newConn.nodeTo())
-							nWt += 1
+					if duplicate == 0:							# if newConnection has not already been added
+						connected.append(newConn)
+						nFr.append(newConn.nodeTo())
 
-					else:											# newConnection is invalid
-						if nWt < g.getMaxWeight():
-							nWt += 1
-					calcPaths(g.shortPathTree,connected)
+				else:											# newConnection is invalid
+					if nWt < g.getMaxWeight():
+						nWt += 1
 			print('\n---')
 			for con in connected:
 				print(con.toString()) 							# Should report back '1, 4, 2, 3' after first run
 			print('---\n')
-			#calcPaths(g.shortPathTree,connected)
+			calcPaths(g.shortPathTree,connected)
 
 		known += 1
 
@@ -414,5 +407,5 @@ def dijkstra(g,r):
 	for con in connected:
 		print(con.toString())
 
-	for i in nFr:
-		print(i)
+	for i in range(len(nFr)):
+		print(nFr[i])
