@@ -167,14 +167,29 @@ class Graph:
 def isNewConn(newCon,ary = []):
 	for i in range(len(ary)):
 		if ((int(newCon.nodeFrom()) == int(ary[i].nodeTo()) and int(newCon.edgeWeight()) == int(ary[i].edgeWeight())) or
-			(int(newCon.nodeTo()) == int(ary[i].nodeFrom()) and int(newCon.edgeWeight()) == int(ary[i].edgeWeight()))):# or
-			#newCon.nodeTo() == ary[i].nodeTo() and newCon.edgeWeight() == ary[i].edgeWeight()):
+			(int(newCon.nodeTo()) == int(ary[i].nodeTo()) and int(newCon.edgeWeight()) == int(ary[i].edgeWeight())) or
+			(int(newCon.nodeFrom()) == int(ary[i].nodeFrom()) and int(newCon.edgeWeight()) == int(ary[i].edgeWeight()))):
 				print('Duplicate found')
 				print('%s == %s' % (newCon.toString(),ary[i].toString()))
 				return(int(-1))
 		else:
 			print('%s != %s' % (newCon.toString(),ary[i].toString()))
-			return(int(0))
+			
+	return(int(0))
+
+'''	@descr	- Check to see if a connection is already in a list
+	@retrn	- BOOLEAN [integer].  '-1' means that the connection is a duplicate
+'''
+def isNewNode(newNd,ary = []):
+	for i in range(len(ary)):
+		if (newNd == ary[i]):
+				print('Duplicate found')
+				print('Node %r == Node %r' % (newNd,ary[i]))
+				return(int(-1))
+		else:
+			print('Node %r != Node %r' % (newNd,ary[i]))
+			
+	return(int(0))
 
 '''	@descr	- Reads a '.csv' file and creates a 'Graph' object based on the contents.
 	@param	-
@@ -297,25 +312,58 @@ def dijkstra(g,r):
 	print('Default Tree:')
 	g.shortPathTree.listTree(r)
 	
-	stage = 1
-	while known < 10:
-		for i in range(len(g.connections)):						# For every Connection
-			for j in range(len(nFr)):							# For all added points
-				newConn = g.getOther(nFr[j],nWt)				# Check for a connection with the search terms
-				duplicate = 0
+	#while known != 1:
+	while known < 5:
+		for i in range(len(g.connections)):
+			duplicate = 0
+			for j in range(len(nFr)):
+				#duplicate = 0
+				newConn = g.getOther(nFr[j],nWt)
 
-				if newConn != int(-1):							# if(newConn IS a point)
-					if isNewConn(newConn,connected) == int(-1):	# if newCon is in fact NOT NEW
-							duplicate = 1						# Set duplicate check
-					else:
-						pass									# Check for duplicate in the next position
-					
-					if duplicate != 1:							# If it a new node
-						connected.append(newConn)				# Append it to the list
+				if newConn != int(-1):							# if newConnection is a Point in the Graph
+					if isNewConn(newConn,connected) == int(-1):	# If newConnection has already been added
+						duplicate = 1
+
+					if duplicate == 0:							# if newConnection has not already been added
+						connected.append(newConn)
 						nFr.append(int(newConn.nodeTo()))
-				else:
-					nWt += 1									# Increment search weight
-			# END FOR
+
+				else:											# newConnection is invalid
+					nWt += 1
+
+		known += 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	#stage = 1
+	#while known < 10:
+	# while len(nFr) < 12:
+	# 	for i in range(len(g.connections)):						# For every Connection
+	# 		for j in range(len(nFr)):							# For all added points
+	# 			newConn = g.getOther(nFr[j],nWt)				# Check for a connection with the search terms
+	# 			duplicate = 0
+
+	# 			if newConn != int(-1):							# if newConn IS a point
+	# 				if isNewConn(newConn,connected) == int(-1):	# if newCon is in fact NOT NEW
+	# 						duplicate = 1						# Set duplicate check
+					
+	# 				if duplicate != 1:							# If it is a new node
+	# 					connected.append(newConn)				# Append it to the list
+	# 					nFr.append(int(newConn.nodeTo()))		# Add the nodeTo to the list of known Nodes
+	# 			else:
+	# 				nWt += 1									# Increment search weight
+	# 		# END FOR
 		# END FOR
 
 		#if isNewConn(newConn,connected) != int(-1):
@@ -324,9 +372,9 @@ def dijkstra(g,r):
 		#else:
 		#	print('Connection already known')
 		
-		connected.sort(key=attrgetter('weight'))	# Sort connected[] by weight
+	#	connected.sort(key=attrgetter('weight'))	# Sort connected[] by weight
 
-		known += 1									# 
+	#	known += 1									# 
 
 		#Check for finalised tree
 		for i in g.shortPathTree.known:
