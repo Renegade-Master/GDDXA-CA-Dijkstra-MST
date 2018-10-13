@@ -59,7 +59,7 @@ class shortPathTree:
 			self.vertex.append(i + 1)
 			self.known.append(0)
 			self.distance.append(math.inf)
-			self.via.append(math.nan)
+			self.via.append(0)
 
 	def update(self,sel,idx,val):
 		if sel == 'vtx':
@@ -194,10 +194,19 @@ def isNewNode(newNd,ary = []):
 	@retrn	- None
 '''
 def calcPaths(spt,ary = []):
-	pass
-	# for i in ary:
-	# 	if int(i.nodeTo())  
-	# 		spt.update('kwn',(i.) - 1,1)
+	for i in ary:
+		for j in range (len(spt.vertex)):
+			print('Does: %r == %r && %r == 0' % (int(i.nodeTo()),int(spt.vertex[j]),int(i.nodeFrom())))
+			if	((int(i.nodeTo()) == int(spt.vertex[j])) and
+				(0 == int(spt.via[j]))):
+				spt.update('dst',int(i.nodeTo()) - 1,int(i.edgeWeight()))	
+				spt.update('via',int(i.nodeTo()) - 1,int(i.nodeFrom()))		
+			
+			print('Or does: %r == %r && %r == %r' % (int(i.nodeTo()),int(spt.vertex[j]),int(i.nodeFrom()),int(spt.via[j])))
+			if((int(i.nodeTo()) == int(spt.vertex[j])) and
+				(int(i.nodeFrom()) == int(spt.via[j]))):
+				spt.update('dst',int(i.nodeTo()) - 1,int(i.edgeWeight()))
+				spt.update('via',int(i.nodeTo()) - 1,int(i.nodeFrom()))
 
 '''	@descr	- Reads a '.csv' file and creates a 'Graph' object based on the contents.
 	@param	-
@@ -328,7 +337,7 @@ def dijkstra(g,r):
 	g.shortPathTree.listTree(r)
 	
 	#while known != 1:
-	while known < 1:
+	while known < 2:
 		print('STARTING MAIN LOOP')
 		for i in range(len(g.connections)):						# For every connection
 			print('STARTING CONNECTIONS LOOP')
