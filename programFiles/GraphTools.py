@@ -140,7 +140,7 @@ class Graph:
 				'Weight: %r\n' % (n2,wt))
 		i = 0
 		for z in range(len(self.connections)):
-			print('Checking [%s]' % self.connections[i].toString())
+			#print('Checking [%s]' % self.connections[i].toString())
 			if int(self.connections[i].nodeFrom()) == int(n2):
 				if int(self.connections[i].edgeWeight()) == int(wt):
 					print('\'TO\' MATCH FOUND')
@@ -195,6 +195,9 @@ def isNewNode(newNd,ary = []):
 '''
 def calcPaths(spt,ary = []):
 	pass
+	# for i in ary:
+	# 	if int(i.nodeTo())  
+	# 		spt.update('kwn',(i.) - 1,1)
 
 '''	@descr	- Reads a '.csv' file and creates a 'Graph' object based on the contents.
 	@param	-
@@ -213,6 +216,11 @@ def compileGraph(fileName):				#EXAMINE LECTURE 5 - PG. 58
 		v = line.split(',')[1]
 		w = line.rstrip().split(',')[2]
 		
+		if u > v:						# Improve readability of Nodes
+			temp = u
+			u = v
+			v = temp
+
 		graph.addCon(Connection(u,v,w))
 
 	out.close()
@@ -324,7 +332,6 @@ def dijkstra(g,r):
 		print('STARTING MAIN LOOP')
 		for i in range(len(g.connections)):						# For every connection
 			print('STARTING CONNECTIONS LOOP')
-			#duplicate = 0
 			for j in range(len(nFr)):							# For every adjacent Node 
 				print('STARTING KNOWN NODES LOOP')
 				for k in range(g.getMaxWeight()):
@@ -345,8 +352,10 @@ def dijkstra(g,r):
 					else:											# newConnection is invalid
 						if nWt < g.getMaxWeight():
 							nWt += 1
-					calcPaths(g.shortPathTree,connected)
 				nWt = 1
+			connected.sort(key=attrgetter('node1','node2'))
+			calcPaths(g.shortPathTree,connected)
+			
 			print('\n---')
 			for con in connected:
 				print(con.toString()) 							# Should report back '1, 4, 2, 3' after first run

@@ -1,0 +1,43 @@
+Connected[] contents after 1 pass
+
+0	Node 1 to Node 4 with a weight of 1
+1	Node 1 to Node 2 with a weight of 2
+2	Node 3 to Node 1 with a weight of 4
+
+
+SPT Structure
+
+def __init__(self):
+		self.vertex 	= []
+		self.known 		= []
+		self.distance 	= []
+		self.via 		= []
+
+	def setup(self,n):
+		for i in range(n):
+			self.vertex.append(i + 1)
+			self.known.append(0)
+			self.distance.append(math.inf)
+			self.via.append(math.nan)
+
+	def update(self,sel,idx,val):
+		if sel == 'vtx':
+			self.vertex[idx] = val
+		elif sel == 'kwn':
+			self.known[idx] = val
+		elif sel == 'dst':
+			self.distance[idx] = val
+		elif sel == 'via':
+			self.via[idx] = val
+
+
+Default SPT State
+
+Vertex	Known	Distance	Via
+1		1		0			1
+2		0		∞			NaN
+3		0		∞			NaN
+4		0		∞			NaN
+5		0		∞			NaN
+6		0		∞			NaN
+7		0		∞			NaN
