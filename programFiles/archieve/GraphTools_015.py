@@ -9,7 +9,6 @@
 from operator import attrgetter
 import math
 import random
-import sys
 
 #################################
 #			OBJECTS				#
@@ -59,7 +58,7 @@ class shortPathTree:
 		for i in range(n):
 			self.vertex.append(i + 1)
 			self.known.append(0)
-			self.distance.append(sys.maxsize)
+			self.distance.append(math.inf)
 			self.via.append(0)
 
 	def update(self,sel,idx,val):
@@ -144,15 +143,15 @@ class Graph:
 			#print('Checking [%s]' % self.connections[i].toString())
 			if int(self.connections[i].nodeFrom()) == int(n2):
 				if int(self.connections[i].edgeWeight()) == int(wt):
-					#print('\'TO\' MATCH FOUND')
+					print('\'TO\' MATCH FOUND')
 					return(self.connections[i])
 
 			if int(self.connections[i].nodeTo()) == int(n2):
 				if int(self.connections[i].edgeWeight()) == int(wt):
-					#print('\'FROM\' MATCH FOUND')
+					print('\'FROM\' MATCH FOUND')
 					return(self.connections[i])
 
-			#print('No match')
+			print('No match')
 			i += 1
 		return(int(-1))
 
@@ -170,10 +169,10 @@ def isNewConn(newCon,ary = []):
 			(int(newCon.nodeTo()) == int(ary[i].nodeTo()) and int(newCon.edgeWeight()) == int(ary[i].edgeWeight())) or
 			(int(newCon.nodeFrom()) == int(ary[i].nodeFrom()) and int(newCon.edgeWeight()) == int(ary[i].edgeWeight()))):
 				print('Duplicate found')
-				#print('%s == %s' % (newCon.toString(),ary[i].toString()))
+				print('%s == %s' % (newCon.toString(),ary[i].toString()))
 				return(int(-1))
-		#else:
-			#print('%s != %s' % (newCon.toString(),ary[i].toString()))
+		else:
+			print('%s != %s' % (newCon.toString(),ary[i].toString()))
 			
 	return(int(0))
 
@@ -195,47 +194,19 @@ def isNewNode(newNd,ary = []):
 	@retrn	- None
 '''
 def calcPaths(spt,ary = []):
-	pass
 	for i in ary:
 		for j in range (len(spt.vertex)):
-			if(
-			(int(i.nodeTo()) == int(spt.vertex[j])) and
-			(0 == int(spt.via[j]))):
+			print('Does: %r == %r && %r == 0' % (int(i.nodeTo()),int(spt.vertex[j]),int(i.nodeFrom())))
+			if	((int(i.nodeTo()) == int(spt.vertex[j])) and
+				(0 == int(spt.via[j]))):
 				spt.update('dst',int(i.nodeTo()) - 1,int(i.edgeWeight()))	
 				spt.update('via',int(i.nodeTo()) - 1,int(i.nodeFrom()))		
-				print('%r == %r && %r == 0' % (int(i.nodeTo()),int(spt.vertex[j]),int(i.nodeFrom())))
 			
-			if(
-			(int(i.nodeTo()) == int(spt.vertex[j])) and
-			(int(i.nodeFrom()) == int(spt.via[j]))):
+			print('Or does: %r == %r && %r == %r' % (int(i.nodeTo()),int(spt.vertex[j]),int(i.nodeFrom()),int(spt.via[j])))
+			if((int(i.nodeTo()) == int(spt.vertex[j])) and
+				(int(i.nodeFrom()) == int(spt.via[j]))):
 				spt.update('dst',int(i.nodeTo()) - 1,int(i.edgeWeight()))
-				spt.update('via',int(i.nodeTo()) - 1,int(i.nodeFrom()))	
-				print('%r == %r && %r == %r' % (int(i.nodeTo()),int(spt.vertex[j]),int(i.nodeFrom()),int(spt.via[j])))
-	
-	# for z in range(len(ary)):
-	# 	start = z + 1
-	# 	end = start + 1
-	# 	frm = start
-	# 	to = start + 1
-	# 	total = 0
-		
-	# 	while to < end:
-	# 		total += ary[to - 1]
-
-		# if total < spt.distance[to] and total != 0:
-		# 	spt.update('dst',x,total)
-		# 	spt.update('via',x,ary[x].nodeTo())			
-
-
-			# if(
-			# (int(i.nodeTo()) == int(spt.vertex[j])) and
-			# (int(i.nodeFrom()) == int(spt.via[j])) and
-			# (int(i.edgeWeight()) < int(spt.distance[j]))):
-			# 	spt.update('dst',int(i.nodeTo()) - 1,int(i.edgeWeight()))
-			# 	spt.update('via',int(i.nodeTo()) - 1,int(i.nodeFrom()))
-			# 	print('%r == %r && %r == %r && %r < %r' % (int(i.nodeTo()),int(spt.vertex[j]),int(i.nodeFrom()),int(spt.via[j]),int(i.edgeWeight()),int(spt.distance[j])))
-
-
+				spt.update('via',int(i.nodeTo()) - 1,int(i.nodeFrom()))
 
 '''	@descr	- Reads a '.csv' file and creates a 'Graph' object based on the contents.
 	@param	-
@@ -254,9 +225,6 @@ def compileGraph(fileName):				#EXAMINE LECTURE 5 - PG. 58
 		v = line.split(',')[1]
 		w = line.rstrip().split(',')[2]
 		
-		if u == v:
-			continue
-
 		if u > v:						# Improve readability of Nodes
 			temp = u
 			u = v
@@ -354,7 +322,7 @@ def dijkstra(g,r):
 	nFr.append(r)
 	#nTo = 1
 	#nFr = 1
-	#nWt = 1
+	nWt = 1
 	newConn = 0
 	
 	g.shortPathTree.update('kwn',0,1)
@@ -369,7 +337,7 @@ def dijkstra(g,r):
 	g.shortPathTree.listTree(r)
 	
 	#while known != 1:
-	while known < 1:
+	while known < 2:
 		print('STARTING MAIN LOOP')
 		for i in range(len(g.connections)):						# For every connection
 			print('STARTING CONNECTIONS LOOP')
@@ -378,17 +346,22 @@ def dijkstra(g,r):
 				for k in range(g.getMaxWeight()):
 					print('STARTING WEIGHT LOOP')
 					duplicate = 0
-					newConn = g.getOther(nFr[j],k + 1)
+					newConn = g.getOther(nFr[j],nWt)
 
 					if newConn != int(-1):							# if newConnection is a Point in the Graph
 						if isNewConn(newConn,connected) == int(-1):	# If newConnection has already been added
 							duplicate = 1
+							nWt += 1
 
 						if duplicate == 0:							# if newConnection has not already been added
 							connected.append(newConn)
 							nFr.append(newConn.nodeTo())
-				## END WEIGHT LOOP
-			## END KNOWN NODES LOOP
+							nWt += 1
+
+					else:											# newConnection is invalid
+						if nWt < g.getMaxWeight():
+							nWt += 1
+				nWt = 1
 			connected.sort(key=attrgetter('node1','node2'))
 			calcPaths(g.shortPathTree,connected)
 			
@@ -396,7 +369,8 @@ def dijkstra(g,r):
 			for con in connected:
 				print(con.toString()) 							# Should report back '1, 4, 2, 3' after first run
 			print('---\n')
-		## END CONNECTIONS LOOP
+			#calcPaths(g.shortPathTree,connected)
+
 		known += 1
 
 
