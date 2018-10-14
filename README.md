@@ -2,7 +2,6 @@ Contents:
 	1 - Requirements
 	2 - How to Use
 		2.1 - Executing the Program
-		2.2 - Navigating the Program
 
 ##################################################
 ##	1	REQUIREMENTS							##
@@ -35,11 +34,10 @@ Contents:
 			that you are using the correct Python
 			Libraries (3.7.0_64-bit).
 		
-	2.1.3	Type 'python minSpanTree.py' to start
+	2.1.3	Navigate to the directory that my
+			'programFiles' are located.
+	
+	2.1.4	Type 'python minSpanTree.py' to start
 			the Program.
 
-	2.1.4	Follow the on-screen prompts.
-
---------------------------------------------------
-
-2.2 - Navigating the Program
+	2.1.5	Follow the on-screen instructions.
