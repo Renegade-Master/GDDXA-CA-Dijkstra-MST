@@ -8,8 +8,8 @@ Contents:
 ##################################################
 
 1.1
-	This program uses the Python scripting language
-	version 3.7.0 (64-bit).
+	This program uses the Python programming
+	language version 3.7.0 (64-bit).
 
 	If you do not have the Python libraries already
 	installed, please download and install the
