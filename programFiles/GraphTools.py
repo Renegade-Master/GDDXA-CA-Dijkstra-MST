@@ -199,15 +199,17 @@ def calcPaths(spt,ary = []):
 	for i in ary:
 		for j in range (len(spt.vertex)):
 			if(
-			(int(i.nodeTo()) == int(spt.vertex[j])) and
-			(0 == int(spt.via[j]))):
+			(int(i.nodeTo()) == int(spt.vertex[j])) and 						# Cnctd[i].node2	== SPT.vtx[j]
+			(0 == int(spt.via[j]))):											# 		0			== SPT.via[j]
 				spt.update('dst',int(i.nodeTo()) - 1,int(i.edgeWeight()))	
 				spt.update('via',int(i.nodeTo()) - 1,int(i.nodeFrom()))		
 				print('%r == %r && %r == 0' % (int(i.nodeTo()),int(spt.vertex[j]),int(i.nodeFrom())))
-			
+			## HERE IS WHERE THE 'MISSING LINK' SHOULD BE ##
+			## The program would work if I could just improve this bit.
+			## Some work towards a solution is shown in the Excel doc.
 			if(
-			(int(i.nodeTo()) == int(spt.vertex[j])) and
-			(int(i.nodeFrom()) == int(spt.via[j]))):
+			(int(i.nodeTo()) == int(spt.vertex[j])) and 						# Cnctd[i].node2	== SPT.vtx[j]
+			(int(i.nodeFrom()) == int(spt.via[j]))):   							# Cnctd[i].node1	== SPT.via[j] 
 				spt.update('dst',int(i.nodeTo()) - 1,int(i.edgeWeight()))
 				spt.update('via',int(i.nodeTo()) - 1,int(i.nodeFrom()))	
 				print('%r == %r && %r == %r' % (int(i.nodeTo()),int(spt.vertex[j]),int(i.nodeFrom()),int(spt.via[j])))
@@ -314,7 +316,7 @@ def getFileData(fileName):
 def generateFile(fileName,nodeMin,nodeMax,conns,wt):
 	random.seed()
 	nodes = random.randint(nodeMin,nodeMax)
-	out = open(fileName + '.csv','w')
+	out = open('testFiles\\' + fileName + '.csv','w')
 	out.write('s\n%r\n' % nodes)
 
 	for x in range(conns):
@@ -332,7 +334,7 @@ def customFile():
 	nodeMin = -1
 	print('Please enter the following information to generate your test file...\n\n')
 	fileName = input('Name of custom file:\n>>')
-	while nodeMin <= 0:
+	while int(nodeMin) <= 0:
 		nodeMin = input('Minimum Nodes:\n>>')
 	nodeMax = input('Maximum Nodes:\n>>')
 	connections = input('Connection Count:\n>>')
@@ -369,7 +371,7 @@ def dijkstra(g,r):
 	g.shortPathTree.listTree(r)
 	
 	#while known != 1:
-	while known < 1:
+	while known < 10:
 		print('STARTING MAIN LOOP')
 		for i in range(len(g.connections)):						# For every connection
 			print('STARTING CONNECTIONS LOOP')
