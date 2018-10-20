@@ -1,3 +1,5 @@
+import math
+
 class Connection:
 	def __init__(self,to,wt):
 		self.nodeTo = to
@@ -8,15 +10,16 @@ class Connection:
 				'with a weight of %r, ' % (self.nodeTo,self.weight))
 
 class shortPathTree:
-	def __init__(self):
-		self.distance = []
-		self.via = []
+	def __init__(self,n):
+		self.distance 	= [math.inf] * n
+		self.via 		= [0] * n
+		self.known 		= [0] * n
 
 class Graph:
 	def __init__(self,n):
 		self.nodes = n
 		self.weight = 0
-		self.shortPathTree = shortPathTree()
+		self.shortPathTree = shortPathTree(n)
 		
 		# Creates a list containing 'n' lists
 		self.connections = [[] for y in range(n)] 
