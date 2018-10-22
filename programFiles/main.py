@@ -9,15 +9,16 @@
 import GraphTools
 
 def __main__():
-	print('**********************************************************')
-	print('Welcome to \'Dijkstra\'s Minimum Spanning Tree\' Algorithm.')
-	print('**********************************************************\n\n')
+	print('************************************************************')
+	print('* Welcome to \'Dijkstra\'s Minimum Spanning Tree\' Algorithm. *')
+	print('************************************************************\n\n')
 
 	#fileName = input('Please enter the name of the test file that you wish to use:\n>>')
 	fileName = 'test'
 	graph = GraphTools.compileGraph('testFiles\\%s' % fileName)
 
-	graph.listConns();
+	#graph.listConns();
+	graph.shortPathTree.debugTree()
 
 
 

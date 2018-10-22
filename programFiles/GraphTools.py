@@ -1,3 +1,10 @@
+'''	@author			Ciaran Bent [K00221230]
+	@creationDate	20/10/2018
+	@description	'Statistics, Algorithms, and AI' auxiliary functions 
+	@version		1.0.0
+	@deadline		31/10/2018
+'''
+
 import math
 
 class Connection:
@@ -14,6 +21,11 @@ class shortPathTree:
 		self.distance 	= [math.inf] * n
 		self.via 		= [0] * n
 		self.known 		= [0] * n
+
+	def debugTree(self):
+		print('To\tDist\tVia')
+		for nd in range(len(self.distance)):
+			print('%s\t%s\t%s' % (self.distance[nd],self.via[nd],self.known[nd]))
 
 class Graph:
 	def __init__(self,n):
@@ -36,9 +48,9 @@ class Graph:
 				print(self.connections[i][j].toString())
 			print('\n')
 
-##########################################################################
+########################################################################
 
-def compileGraph(fileName):				#EXAMINE LECTURE 5 - PG. 58
+def compileGraph(fileName):
 	out = open(fileName + '.csv','r')
 	fileFormat = out.readline().rstrip()
 	nodes = int(out.readline())
