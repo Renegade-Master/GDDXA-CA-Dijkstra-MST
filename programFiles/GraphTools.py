@@ -6,7 +6,7 @@
 '''
 
 import math
-
+##
 class Connection:
 	def __init__(self,to,wt):
 		self.nodeTo = to
@@ -15,7 +15,7 @@ class Connection:
 	def toString(self):
 		return(	'to Node %r '
 				'with a weight of %r, ' % (self.nodeTo,self.weight))
-
+##
 class shortPathTree:
 	def __init__(self,n):
 		self.distance 	= [math.inf] * n
@@ -26,11 +26,12 @@ class shortPathTree:
 		print('To\tDist\tVia')
 		for nd in range(len(self.distance)):
 			print('%s\t%s\t%s' % (self.distance[nd],self.via[nd],self.known[nd]))
-
+##
 class Graph:
 	def __init__(self,n):
 		self.nodes = n
 		self.weight = 0
+		self.maxWeight = 0
 		self.shortPathTree = shortPathTree(n)
 		
 		# Creates a list containing 'n' lists
@@ -40,6 +41,8 @@ class Graph:
 		# Node 5 == connections[4]
 		self.connections[int(fr) - 1].append(Connection(to,wt))
 		self.weight += int(wt)
+		if int(wt) > int(self.maxWeight):
+			self.maxWeight = int(wt)
 
 	def listConns(self):
 		for i in range(len(self.connections)):
@@ -49,7 +52,7 @@ class Graph:
 			print('\n')
 
 ########################################################################
-
+##
 def compileGraph(fileName):
 	out = open(fileName + '.csv','r')
 	fileFormat = out.readline().rstrip()
@@ -75,3 +78,12 @@ def compileGraph(fileName):
 	out.close()
 	
 	return(graph)
+##
+def Dijkstra(g):
+	known = 0
+
+	print(	'Calculating Shortest Path Spanning Tree...\n\n'
+			'Nodes in this Graph:\t%r\n'
+			'Max Graph Weight is:\t%r\n'
+			'Total Graph weight is:\t%r\n' 
+			% (g.nodes,g.maxWeight,g.weight))

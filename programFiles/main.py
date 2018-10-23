@@ -17,10 +17,9 @@ def __main__():
 	fileName = 'test'
 	graph = GraphTools.compileGraph('testFiles\\%s' % fileName)
 
-	#graph.listConns();
-	graph.shortPathTree.debugTree()
+	#graph.listConns()
+	#graph.shortPathTree.debugTree()
 
-
-
+	GraphTools.Dijkstra(graph)
 
 __main__()
