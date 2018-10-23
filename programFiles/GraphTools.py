@@ -87,3 +87,8 @@ def Dijkstra(g):
 			'Max Graph Weight is:\t%r\n'
 			'Total Graph weight is:\t%r\n' 
 			% (g.nodes,g.maxWeight,g.weight))
+
+	for fr in g.connections:
+		for to in fr:
+			print(to.toString())
+		print('\n')
