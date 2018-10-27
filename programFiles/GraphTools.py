@@ -20,12 +20,15 @@ class shortPathTree:
 	def __init__(self,n):
 		self.distance 	= [math.inf] * n
 		self.via 		= [0] * n
-		self.known 		= [0] * n
+		self.known 		= [True] * n
 
 	def debugTree(self):
-		print('To\tDist\tVia')
+		i = 1
+		print('To\tDist\tVia\tKnown')
 		for nd in range(len(self.distance)):
-			print('%s\t%s\t%s' % (self.distance[nd],self.via[nd],self.known[nd]))
+			print('%s\t%s\t%s\t%s' % (i,self.distance[nd],self.via[nd],self.known[nd]))
+			i += 1
+
 ##
 class Graph:
 	def __init__(self,n):
@@ -80,7 +83,7 @@ def compileGraph(fileName):
 	return(graph)
 ##
 def Dijkstra(g):
-	known = 0
+	known = False
 
 	print(	'Calculating Shortest Path Spanning Tree...\n\n'
 			'Nodes in this Graph:\t%r\n'
@@ -88,7 +91,15 @@ def Dijkstra(g):
 			'Total Graph weight is:\t%r\n' 
 			% (g.nodes,g.maxWeight,g.weight))
 
-	for fr in g.connections:
-		for to in fr:
-			print(to.toString())
-		print('\n')
+	while not known:
+		for fr in g.connections:
+			for to in fr:
+				print(to.toString())
+			print('\n')
+
+		for i in g.shortPathTree.known:
+			if i == True:
+				continue
+			if i == False:
+				break
+			known = True

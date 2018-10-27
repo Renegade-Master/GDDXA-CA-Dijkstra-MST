@@ -18,8 +18,8 @@ def __main__():
 	graph = GraphTools.compileGraph('testFiles\\%s' % fileName)
 
 	#graph.listConns()
-	#graph.shortPathTree.debugTree()
+	graph.shortPathTree.debugTree()
 
-	GraphTools.Dijkstra(graph)
+	#GraphTools.Dijkstra(graph)
 
 __main__()
