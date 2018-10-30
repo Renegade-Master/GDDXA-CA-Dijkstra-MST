@@ -77,7 +77,7 @@ def compileGraph(fileName):
 			u = v
 			v = temp
 
-		graph.addCon(u,v,w,nodes)
+		graph.addCon(int(u),int(v),int(w),nodes)
 
 	out.close()
 	
@@ -98,13 +98,10 @@ def Dijkstra(g,stNd):
 	#while not known:
 	while known < 1:
 		for fr in g.connections:		# For each vertex
-			c_adj.clear()				# Clear list of Conns ready for next iteration
+			fr.sort(key=attrgetter('weight'))
 			for to in fr:				# For every vertex attached to 'fr'
-				c_adj.append(to)
-			c_adj.sort(key=attrgetter('weight'))
-			print(c_adj[0].toString())
-			#print('\n')
-			#print(c_adj)
+				print(to.toString())	# STOP USING ARRAYS.  JUST UPDATE THE TREE.  THAT'S WHAT THE TREE IS FOR
+			print('\n')
 		known += 1
 
 		# for i in g.shortPathTree.known:
