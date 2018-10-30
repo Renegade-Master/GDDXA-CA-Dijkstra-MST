@@ -92,14 +92,16 @@ def Dijkstra(g):
 			% (g.nodes,g.maxWeight,g.weight))
 
 	while not known:
-		for fr in g.connections:
-			for to in fr:
+		for fr in g.connections:		# For each vertex
+			for to in fr:				# For every vertex attached to 'fr'
 				print(to.toString())
-			print('\n')
 
-		for i in g.shortPathTree.known:
-			if i == True:
-				continue
-			if i == False:
-				break
-			known = True
+			print('\n')
+		known = True
+
+		# for i in g.shortPathTree.known:
+		# 	if i == True:
+		# 		continue
+		# 	if i == False:
+		# 		break
+		# 	known = True
