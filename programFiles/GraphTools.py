@@ -7,21 +7,23 @@
 
 import math
 from operator import attrgetter
+
 ##
 class Connection:
 	def __init__(self,to,wt):
-		self.nodeTo = to
-		self.weight = wt
+		self.nodeTo = int(to)
+		self.weight = int(wt)
 
 	def toString(self):
 		return(	'to Node %r '
 				'with a weight of %r, ' % (self.nodeTo,self.weight))
+
 ##
 class shortPathTree:
 	def __init__(self,n):
 		self.distance 	= [math.inf] * n
 		self.via 		= [0] * n
-		self.known 		= [True] * n
+		self.known 		= [False] * n
 
 	def debugTree(self):
 		i = 1
@@ -56,6 +58,7 @@ class Graph:
 			print('\n')
 
 ########################################################################
+
 ##
 def compileGraph(fileName):
 	out = open(fileName + '.csv','r')
@@ -82,11 +85,18 @@ def compileGraph(fileName):
 	out.close()
 	
 	return(graph)
+
+##
+def traceback(start,node):
+		totalWeight = 0
+
+		return(totalWeight)
+
 ##
 def Dijkstra(g,stNd):
-	c_adj = []	# Adjacent nodes
 	#known = False
 	known = 0
+	currNode = stNd - 1
 
 	print(	'Calculating Shortest Path Spanning Tree...\n\n'
 			'Nodes in this Graph:\t: %r\n'
@@ -95,13 +105,20 @@ def Dijkstra(g,stNd):
 			'Start Node is:\t\t: %r\n' 
 			% (g.nodes,g.maxWeight,g.weight,stNd))
 
+	g.shortPathTree.distance[stNd - 1] = 'N/A'
+	g.shortPathTree.via[stNd - 1] = 'SELF'
+	g.shortPathTree.known[stNd - 1] = True
+
 	#while not known:
 	while known < 1:
-		for fr in g.connections:		# For each vertex
-			fr.sort(key=attrgetter('weight'))
-			for to in fr:				# For every vertex attached to 'fr'
-				print(to.toString())	# STOP USING ARRAYS.  JUST UPDATE THE TREE.  THAT'S WHAT THE TREE IS FOR
-			print('\n')
+		for fr in g.connections:				# For each vertex
+			fr.sort(key=attrgetter('weight'))	# Sort list so shortest is First
+			for to in fr:						# For every vertex attached to 'fr'
+				if(not g.shortPathTree.known[to.nodeTo - 1] and 
+				    g.shortPathTree.distance[to.nodeTo - 1] > traceback(stNd,currNode)):
+						g.shortPathTree.distance[to.nodeTo - 1] = to.weight
+						g.shortPathTree.via[to.nodeTo - 1] = 1
+			g.shortPathTree.known[currNode] = True
 		known += 1
 
 		# for i in g.shortPathTree.known:

@@ -21,5 +21,6 @@ def __main__():
 	#graph.shortPathTree.debugTree()
 
 	GraphTools.Dijkstra(graph,1)
+	graph.shortPathTree.debugTree()
 
 __main__()
