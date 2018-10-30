@@ -20,6 +20,6 @@ def __main__():
 	#graph.listConns()
 	#graph.shortPathTree.debugTree()
 
-	GraphTools.Dijkstra(graph)
+	GraphTools.Dijkstra(graph,1)
 
 __main__()

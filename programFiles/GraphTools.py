@@ -6,6 +6,7 @@
 '''
 
 import math
+from operator import attrgetter
 ##
 class Connection:
 	def __init__(self,to,wt):
@@ -82,22 +83,29 @@ def compileGraph(fileName):
 	
 	return(graph)
 ##
-def Dijkstra(g):
-	known = False
+def Dijkstra(g,stNd):
+	c_adj = []	# Adjacent nodes
+	#known = False
+	known = 0
 
 	print(	'Calculating Shortest Path Spanning Tree...\n\n'
-			'Nodes in this Graph:\t%r\n'
-			'Max Graph Weight is:\t%r\n'
-			'Total Graph weight is:\t%r\n' 
-			% (g.nodes,g.maxWeight,g.weight))
+			'Nodes in this Graph:\t: %r\n'
+			'Max Graph Weight is:\t: %r\n'
+			'Total Graph weight is:\t: %r\n'
+			'Start Node is:\t\t: %r\n' 
+			% (g.nodes,g.maxWeight,g.weight,stNd))
 
-	while not known:
+	#while not known:
+	while known < 1:
 		for fr in g.connections:		# For each vertex
+			c_adj.clear()				# Clear list of Conns ready for next iteration
 			for to in fr:				# For every vertex attached to 'fr'
-				print(to.toString())
-
-			print('\n')
-		known = True
+				c_adj.append(to)
+			c_adj.sort(key=attrgetter('weight'))
+			print(c_adj[0].toString())
+			#print('\n')
+			#print(c_adj)
+		known += 1
 
 		# for i in g.shortPathTree.known:
 		# 	if i == True:
