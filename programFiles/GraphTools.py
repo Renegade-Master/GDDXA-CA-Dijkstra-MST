@@ -109,6 +109,11 @@ def Dijkstra(g,stNd):
 	g.shortPathTree.via[stNd - 1] = 'SELF'
 	g.shortPathTree.known[stNd - 1] = True
 
+	# Loop through list of lists looking for point 1 then point 2
+	# Add weights as passing through points
+	# If found, record total weight, add to SPT
+	# If end of list found, look for next point
+
 	#while not known:
 	while known < 1:
 		for fr in g.connections:				# For each vertex
