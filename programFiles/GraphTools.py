@@ -96,7 +96,7 @@ def traceback(start,node):
 def Dijkstra(g,stNd):
 	#known = False
 	known = 0
-	currNode = stNd - 1
+	lookFor = 0
 
 	print(	'Calculating Shortest Path Spanning Tree...\n\n'
 			'Nodes in this Graph:\t: %r\n'
@@ -114,17 +114,34 @@ def Dijkstra(g,stNd):
 	# If found, record total weight, add to SPT
 	# If end of list found, look for next point
 
-	#while not known:
-	while known < 1:
+	while lookFor < g.nodes:
+		lookFor += 1
+		currNode = 0
 		for fr in g.connections:				# For each vertex
+			searchWeight = 0
+			currNode += 1
 			fr.sort(key=attrgetter('weight'))	# Sort list so shortest is First
-			for to in fr:						# For every vertex attached to 'fr'
-				if(not g.shortPathTree.known[to.nodeTo - 1] and 
-				    g.shortPathTree.distance[to.nodeTo - 1] > traceback(stNd,currNode)):
-						g.shortPathTree.distance[to.nodeTo - 1] = to.weight
-						g.shortPathTree.via[to.nodeTo - 1] = 1
-			g.shortPathTree.known[currNode] = True
-		known += 1
+			print('Looking for [%r] from [%r]' % (lookFor,currNode))
+			for to in fr:						# For every vertex connected to 'fr'
+				searchWeight += to.weight
+				if to.nodeTo == lookFor:
+					print('\tFound [%s]; Total Weight %r' % (to.toString(),searchWeight))
+					# ADD A NEW ENTRY TO THE SPT
+			print('\n')
+		#known += 1
+		print('---\n')
+
+	#while not known:
+	# while known < 1:
+	# 	for fr in g.connections:				# For each vertex
+	# 		fr.sort(key=attrgetter('weight'))	# Sort list so shortest is First
+	# 		for to in fr:						# For every vertex attached to 'fr'
+	# 			if(not g.shortPathTree.known[to.nodeTo - 1] and 
+	# 			    g.shortPathTree.distance[to.nodeTo - 1] > traceback(stNd,currNode)):
+	# 					g.shortPathTree.distance[to.nodeTo - 1] = to.weight
+	# 					g.shortPathTree.via[to.nodeTo - 1] = 1
+	# 		g.shortPathTree.known[currNode] = True
+	# 	known += 1
 
 		# for i in g.shortPathTree.known:
 		# 	if i == True:
