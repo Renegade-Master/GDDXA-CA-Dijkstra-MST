@@ -155,8 +155,6 @@ def Dijkstra(g,stNd):
 		#g.shortPathTree.known[lookFor - 1] = True
 
 		# Check for Completeness
-		# if(lookFor == g.nodes - 1):
-		# 	lookFor = 0
 		# for ent in g.shortPathTree.known:
 		# 	if ent == True:
 		# 		continue
@@ -164,60 +162,4 @@ def Dijkstra(g,stNd):
 		# 		break
 		# 	allKnown = True
 		g.shortPathTree.debugTree()
-
-				# elif(currNode == lookFor):
-				# 	if not g.shortPathTree.known[currNode - 1]:
-				# 		print('ShPt to Node %r IS NOT known' % int(currNode))
-				# 		if((to.weight + g.shortPathTree.distance[currNode - 1]) < (g.shortPathTree.distance[currNode - 1])):
-				# 			print('The Path via Node %r: %r is shorter than %r' % (currNode,(to.weight + int(g.shortPathTree.distance[currNode - 1])),(g.shortPathTree.distance[currNode - 1])))
-				# 			g.shortPathTree.distance[currNode - 1] = (to.weight + int(g.shortPathTree.distance[currNode - 1]))
-				# 			g.shortPathTree.via[currNode - 1] = currNode
-				# 			#g.shortPathTree.known[currNode - 1] = True
-				# 		else:
-				# 			print('The Path via Node %r: %r is not shorter than %r' % (currNode,(to.weight + int(g.shortPathTree.distance[currNode - 1])),(g.shortPathTree.distance[currNode - 1])))
-				# 	else:
-				# 		print('ShPt to Node %r IS known' % int(currNode))
-			#print('\n')
-			#g.shortPathTree.known[nextNode - 1] = True
-		#known += 1
 		print('---\n')
-
-
-	#while lookFor < g.nodes:
-	# while lookFor < 2:
-	# 	lookFor += 1	# The Node we are looking for
-	# 	currNode = 0	# The Node we are currently examining
-	# 	for fr in g.connections:				# For each vertex
-	# 		searchWeight = 0
-	# 		currNode += 1
-	# 		if lookFor == stNd:					# Don't look for shortest path to SELF
-	# 			continue
-	# 		fr.sort(key=attrgetter('weight'))	# Sort list so shortest is First
-	# 		print('Looking for [%r] from [%r]' % (lookFor,currNode))
-	# 		for to in fr:						# For every vertex connected to 'fr'
-	# 			searchWeight += to.weight
-	# 			if to.nodeTo == lookFor:
-	# 				print('\tFound [%s]; Total Weight %r' % (to.toString(),searchWeight))
-	# 				# ADD A NEW ENTRY TO THE SPT
-	# 		print('\n')
-	# 	#known += 1
-	# 	print('---\n')
-
-	#while not known:
-	# while known < 1:
-	# 	for fr in g.connections:				# For each vertex
-	# 		fr.sort(key=attrgetter('weight'))	# Sort list so shortest is First
-	# 		for to in fr:						# For every vertex attached to 'fr'
-	# 			if(not g.shortPathTree.known[to.nodeTo - 1] and 
-	# 			    g.shortPathTree.distance[to.nodeTo - 1] > traceback(stNd,currNode)):
-	# 					g.shortPathTree.distance[to.nodeTo - 1] = to.weight
-	# 					g.shortPathTree.via[to.nodeTo - 1] = 1
-	# 		g.shortPathTree.known[currNode] = True
-	# 	known += 1
-
-		# for i in g.shortPathTree.known:
-		# 	if i == True:
-		# 		continue
-		# 	if i == False:
-		# 		break
-		# 	known = True
