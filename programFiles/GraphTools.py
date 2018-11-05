@@ -16,7 +16,7 @@ class Connection:
 
 	def toString(self):
 		return(	'to Node %r '
-				'with a weight of %r, ' % (self.nodeTo,self.weight))
+				'with a weight of %r' % (self.nodeTo,self.weight))
 
 ##
 class shortPathTree:
@@ -54,7 +54,7 @@ class Graph:
 		for i in range(len(self.connections)):
 			print('Connection %r:\t' % (i + 1))
 			for j in range(len(self.connections[i])):
-				print(self.connections[i][j].toString())
+				print('%s, ' % self.connections[i][j].toString())
 			print('\n')
 
 ########################################################################
@@ -119,7 +119,7 @@ def Dijkstra(g,stNd):
 	#while not allKnown:
 		lookFor += 1	# The Node we are looking for
 		if lookFor == g.nodes + 1:
-		 	lookFor = 1
+		  	lookFor = 1
 		if lookFor == stNd:	# Don't look for shortest path to SELF
 			continue
 		currNode = 0	# The Node we are currently examining
@@ -133,12 +133,14 @@ def Dijkstra(g,stNd):
 	 			continue
 			fr.sort(key=attrgetter('weight'))	# Sort list so shortest is First
 			for to in fr:						# For every vertex connected to 'fr'
-				print('Looking for Node %r in %r->%r' % (lookFor,currNode,to.nodeTo))
+				#print('Looking for Node %r in %r->%r' % (lookFor,currNode,to.nodeTo))
 				nextNode = to.nodeTo
 				if currNode == lookFor:
 					temp = nextNode
 					nextNode = currNode
 					currNode = temp
+				print('\nLooking for Node %r in %r->%r' % (lookFor,currNode,to.nodeTo))
+				print('At Node [%s]' % to.toString())
 				if((nextNode == lookFor)):
 					# ADD A NEW ENTRY TO THE SPT
 					if not g.shortPathTree.known[nextNode - 1]:
