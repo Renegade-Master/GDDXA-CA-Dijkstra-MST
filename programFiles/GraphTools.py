@@ -105,7 +105,7 @@ def Dijkstra(g,stNd):
 			'Start Node is:\t\t: %r\n' 
 			% (g.nodes,g.maxWeight,g.weight,stNd))
 
-	g.shortPathTree.distance[stNd - 1] = 'N/A'
+	g.shortPathTree.distance[stNd - 1] = 0
 	g.shortPathTree.via[stNd - 1] = 'SELF'
 	g.shortPathTree.known[stNd - 1] = True
 
@@ -115,21 +115,49 @@ def Dijkstra(g,stNd):
 	# If end of list found, look for next point
 
 	while lookFor < g.nodes:
-		lookFor += 1
-		currNode = 0
+		lookFor += 1	# The Node we are looking for
+		if lookFor == stNd:	# Don't look for shortest path to SELF
+			continue
+		currNode = 0	# The Node we are currently examining
+		
 		for fr in g.connections:				# For each vertex
 			searchWeight = 0
 			currNode += 1
-			fr.sort(key=attrgetter('weight'))	# Sort list so shortest is First
-			print('Looking for [%r] from [%r]' % (lookFor,currNode))
 			for to in fr:						# For every vertex connected to 'fr'
-				searchWeight += to.weight
 				if to.nodeTo == lookFor:
 					print('\tFound [%s]; Total Weight %r' % (to.toString(),searchWeight))
 					# ADD A NEW ENTRY TO THE SPT
+					if not g.shortPathTree.known[to.nodeTo - 1]:
+						print('SPT.known[%r] is NOT KNOWN' % int(to.nodeTo - 1))
+						if((to.weight + int(g.shortPathTree.distance[currNode - 1])) < (g.shortPathTree.distance[to.nodeTo - 1])):
+							print('The Path is shorter')
+							g.shortPathTree.distance[to.nodeTo - 1] = (to.weight + int(g.shortPathTree.distance[currNode - 1]))
+							g.shortPathTree.via[to.nodeTo - 1] = currNode
+							#g.shortPathTree.known[to.nodeTo - 1] = True
 			print('\n')
 		#known += 1
 		print('---\n')
+
+
+	#while lookFor < g.nodes:
+	# while lookFor < 2:
+	# 	lookFor += 1	# The Node we are looking for
+	# 	currNode = 0	# The Node we are currently examining
+	# 	for fr in g.connections:				# For each vertex
+	# 		searchWeight = 0
+	# 		currNode += 1
+	# 		if lookFor == stNd:					# Don't look for shortest path to SELF
+	# 			continue
+	# 		fr.sort(key=attrgetter('weight'))	# Sort list so shortest is First
+	# 		print('Looking for [%r] from [%r]' % (lookFor,currNode))
+	# 		for to in fr:						# For every vertex connected to 'fr'
+	# 			searchWeight += to.weight
+	# 			if to.nodeTo == lookFor:
+	# 				print('\tFound [%s]; Total Weight %r' % (to.toString(),searchWeight))
+	# 				# ADD A NEW ENTRY TO THE SPT
+	# 		print('\n')
+	# 	#known += 1
+	# 	print('---\n')
 
 	#while not known:
 	# while known < 1:
