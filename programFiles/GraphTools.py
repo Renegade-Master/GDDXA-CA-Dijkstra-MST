@@ -95,7 +95,7 @@ def traceback(start,node):
 ##
 def Dijkstra(g,stNd):
 	#known = False
-	known = 0
+	allKnown = False
 	lookFor = 0
 
 	print(	'Calculating Shortest Path Spanning Tree...\n\n'
@@ -114,8 +114,12 @@ def Dijkstra(g,stNd):
 	# If found, record total weight, add to SPT
 	# If end of list found, look for next point
 
-	while lookFor < g.nodes:
+	for i in range(g.nodes * 2):
+	#while lookFor < g.nodes + 1:
+	#while not allKnown:
 		lookFor += 1	# The Node we are looking for
+		if lookFor == g.nodes + 1:
+		 	lookFor = 1
 		if lookFor == stNd:	# Don't look for shortest path to SELF
 			continue
 		currNode = 0	# The Node we are currently examining
@@ -129,7 +133,7 @@ def Dijkstra(g,stNd):
 	 			continue
 			fr.sort(key=attrgetter('weight'))	# Sort list so shortest is First
 			for to in fr:						# For every vertex connected to 'fr'
-				print('Looking for Node %r in %r:%r' % (lookFor,currNode,to.nodeTo))
+				print('Looking for Node %r in %r->%r' % (lookFor,currNode,to.nodeTo))
 				nextNode = to.nodeTo
 				if currNode == lookFor:
 					temp = nextNode
@@ -148,6 +152,19 @@ def Dijkstra(g,stNd):
 							print('The Path via Node %r: %r is not shorter than %r' % (currNode,(to.weight + g.shortPathTree.distance[currNode - 1]),(g.shortPathTree.distance[nextNode - 1])))
 					else:
 						print('ShPt to Node %r IS known' % int(nextNode))
+		#g.shortPathTree.known[lookFor - 1] = True
+
+		# Check for Completeness
+		# if(lookFor == g.nodes - 1):
+		# 	lookFor = 0
+		# for ent in g.shortPathTree.known:
+		# 	if ent == True:
+		# 		continue
+		# 	elif ent == False:
+		# 		break
+		# 	allKnown = True
+		g.shortPathTree.debugTree()
+
 				# elif(currNode == lookFor):
 				# 	if not g.shortPathTree.known[currNode - 1]:
 				# 		print('ShPt to Node %r IS NOT known' % int(currNode))
