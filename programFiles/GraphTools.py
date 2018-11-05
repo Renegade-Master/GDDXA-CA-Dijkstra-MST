@@ -119,22 +119,49 @@ def Dijkstra(g,stNd):
 		if lookFor == stNd:	# Don't look for shortest path to SELF
 			continue
 		currNode = 0	# The Node we are currently examining
+		nextNode = 0
 		
 		for fr in g.connections:				# For each vertex
+			#print('Looking for Node %r' % lookFor)
 			searchWeight = 0
 			currNode += 1
+			if lookFor == stNd:					# Don't look for shortest path to SELF
+	 			continue
+			fr.sort(key=attrgetter('weight'))	# Sort list so shortest is First
 			for to in fr:						# For every vertex connected to 'fr'
-				if to.nodeTo == lookFor:
-					print('\tFound [%s]; Total Weight %r' % (to.toString(),searchWeight))
+				print('Looking for Node %r in %r:%r' % (lookFor,currNode,to.nodeTo))
+				nextNode = to.nodeTo
+				if currNode == lookFor:
+					temp = nextNode
+					nextNode = currNode
+					currNode = temp
+				if((nextNode == lookFor)):
 					# ADD A NEW ENTRY TO THE SPT
-					if not g.shortPathTree.known[to.nodeTo - 1]:
-						print('SPT.known[%r] is NOT KNOWN' % int(to.nodeTo - 1))
-						if((to.weight + int(g.shortPathTree.distance[currNode - 1])) < (g.shortPathTree.distance[to.nodeTo - 1])):
-							print('The Path is shorter')
-							g.shortPathTree.distance[to.nodeTo - 1] = (to.weight + int(g.shortPathTree.distance[currNode - 1]))
-							g.shortPathTree.via[to.nodeTo - 1] = currNode
-							#g.shortPathTree.known[to.nodeTo - 1] = True
-			print('\n')
+					if not g.shortPathTree.known[nextNode - 1]:
+						print('ShPt to Node %r IS NOT known' % int(nextNode))
+						if((to.weight + g.shortPathTree.distance[currNode - 1]) < (g.shortPathTree.distance[nextNode - 1])):
+							print('The Path via Node %r: %r is shorter than %r' % (currNode,(to.weight + int(g.shortPathTree.distance[currNode - 1])),(g.shortPathTree.distance[nextNode - 1])))
+							g.shortPathTree.distance[nextNode - 1] = (to.weight + int(g.shortPathTree.distance[currNode - 1]))
+							g.shortPathTree.via[nextNode - 1] = currNode
+							#g.shortPathTree.known[nextNode - 1] = True
+						else:
+							print('The Path via Node %r: %r is not shorter than %r' % (currNode,(to.weight + g.shortPathTree.distance[currNode - 1]),(g.shortPathTree.distance[nextNode - 1])))
+					else:
+						print('ShPt to Node %r IS known' % int(nextNode))
+				# elif(currNode == lookFor):
+				# 	if not g.shortPathTree.known[currNode - 1]:
+				# 		print('ShPt to Node %r IS NOT known' % int(currNode))
+				# 		if((to.weight + g.shortPathTree.distance[currNode - 1]) < (g.shortPathTree.distance[currNode - 1])):
+				# 			print('The Path via Node %r: %r is shorter than %r' % (currNode,(to.weight + int(g.shortPathTree.distance[currNode - 1])),(g.shortPathTree.distance[currNode - 1])))
+				# 			g.shortPathTree.distance[currNode - 1] = (to.weight + int(g.shortPathTree.distance[currNode - 1]))
+				# 			g.shortPathTree.via[currNode - 1] = currNode
+				# 			#g.shortPathTree.known[currNode - 1] = True
+				# 		else:
+				# 			print('The Path via Node %r: %r is not shorter than %r' % (currNode,(to.weight + int(g.shortPathTree.distance[currNode - 1])),(g.shortPathTree.distance[currNode - 1])))
+				# 	else:
+				# 		print('ShPt to Node %r IS known' % int(currNode))
+			#print('\n')
+			#g.shortPathTree.known[nextNode - 1] = True
 		#known += 1
 		print('---\n')
 
