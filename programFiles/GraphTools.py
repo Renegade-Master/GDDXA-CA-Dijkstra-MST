@@ -25,6 +25,13 @@ class shortPathTree:
 		self.via 		= [0] * n
 		self.known 		= [False] * n
 
+	def listTree(self):
+		i = 1
+		print('To\tDist\tVia')
+		for nd in range(len(self.distance)):
+			print('%s\t%s\t%s' % (i,self.distance[nd],self.via[nd]))
+			i += 1
+
 	def debugTree(self):
 		i = 1
 		print('To\tDist\tVia\tKnown')
@@ -56,6 +63,9 @@ class Graph:
 			for j in range(len(self.connections[i])):
 				print('%s, ' % self.connections[i][j].toString())
 			print('\n')
+
+	def getNodes(self):
+		return(int(self.nodes))
 
 ########################################################################
 
@@ -139,29 +149,30 @@ def Dijkstra(g,stNd):
 					temp = nextNode
 					nextNode = currNode
 					currNode = temp
-				print('\nLooking for Node %r in %r->%r' % (lookFor,currNode,to.nodeTo))
-				print('At Node [%s]' % to.toString())
+				#print('\nLooking for Node %r in %r->%r' % (lookFor,currNode,to.nodeTo))
+				#print('At Node [%s]' % to.toString())
 				if((nextNode == lookFor)):
 					# ADD A NEW ENTRY TO THE SPT
 					if not g.shortPathTree.known[nextNode - 1]:
-						print('ShPt to Node %r IS NOT known' % int(nextNode))
+						#print('ShPt to Node %r IS NOT known' % int(nextNode))
 						if((to.weight + g.shortPathTree.distance[currNode - 1]) < (g.shortPathTree.distance[nextNode - 1])):
-							print('The Path via Node %r: %r is shorter than %r' % (currNode,(to.weight + int(g.shortPathTree.distance[currNode - 1])),(g.shortPathTree.distance[nextNode - 1])))
+							#print('The Path via Node %r: %r is shorter than %r' % (currNode,(to.weight + int(g.shortPathTree.distance[currNode - 1])),(g.shortPathTree.distance[nextNode - 1])))
 							g.shortPathTree.distance[nextNode - 1] = (to.weight + int(g.shortPathTree.distance[currNode - 1]))
 							g.shortPathTree.via[nextNode - 1] = currNode
 							#g.shortPathTree.known[nextNode - 1] = True
 						else:
-							print('The Path via Node %r: %r is not shorter than %r' % (currNode,(to.weight + g.shortPathTree.distance[currNode - 1]),(g.shortPathTree.distance[nextNode - 1])))
+							pass
+							#print('The Path via Node %r: %r is not shorter than %r' % (currNode,(to.weight + g.shortPathTree.distance[currNode - 1]),(g.shortPathTree.distance[nextNode - 1])))
 					else:
-						print('ShPt to Node %r IS known' % int(nextNode))
+						pass
+						#print('ShPt to Node %r IS known' % int(nextNode))
 		#g.shortPathTree.known[lookFor - 1] = True
 
 		# Check for Completeness
-		# for ent in g.shortPathTree.known:
-		# 	if ent == True:
-		# 		continue
-		# 	elif ent == False:
-		# 		break
-		# 	allKnown = True
-		g.shortPathTree.debugTree()
-		print('---\n')
+		for ent in g.shortPathTree.known:
+			if ent == False:
+				ent = True
+				break
+			allKnown = True
+		#g.shortPathTree.debugTree()
+		#print('---\n')
