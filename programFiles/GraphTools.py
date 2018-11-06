@@ -2,13 +2,19 @@
 	@creationDate	20/10/2018
 	@description	'Statistics, Algorithms, and AI' auxiliary functions 
 	@version		1.0.0
-	@deadline		31/10/2018
+	@deadline		11/11/2018
 '''
 
-import math
-from operator import attrgetter
+import math						# For infinity value
+import os						# For directory manipulation
+from operator import attrgetter	# For sorting
 
-##
+'''
+	@desc	A class to create a Connection object.
+	@param	to	- The Node that this Connection connects TO
+			wt	- The Weight of this Connection
+	@funct	toString	- Easily access important Connection information
+'''
 class Connection:
 	def __init__(self,to,wt):
 		self.nodeTo = int(to)
@@ -18,7 +24,12 @@ class Connection:
 		return(	'to Node %r '
 				'with a weight of %r' % (self.nodeTo,self.weight))
 
-##
+'''
+	@desc	The Shortest Path Tree structure.
+	@param	n	- The number of Nodes in the Graph.  Used to create lists
+	@funct	listTree	- Print important contents of the Tree object
+			debugTree	- Print ALL contents of the Tree object
+'''
 class shortPathTree:
 	def __init__(self,n):
 		self.distance 	= [math.inf] * n
@@ -39,7 +50,13 @@ class shortPathTree:
 			print('%s\t%s\t%s\t%s' % (i,self.distance[nd],self.via[nd],self.known[nd]))
 			i += 1
 
-##
+'''
+	@desc	A class to create a Graph object
+	@param	n	- The number of Nodes in the Graph
+	@funct	addConn		- Add a new Connection to the Graph
+			listConns	- List the Connections in the Graph
+			getNodes	- Return the number of Nodes in the Graph
+'''
 class Graph:
 	def __init__(self,n):
 		self.nodes = n
@@ -69,7 +86,10 @@ class Graph:
 
 ########################################################################
 
-##
+'''
+	@desc	Compile a new Graph object from a text file
+	@param	fileName	- The STRING title of the desired text file
+'''
 def compileGraph(fileName):
 	out = open(fileName + '.csv','r')
 	fileFormat = out.readline().rstrip()
@@ -85,7 +105,7 @@ def compileGraph(fileName):
 		if u == v:
 			continue
 
-		if u > v:						# Improve readability of Nodes
+		if u > v:	# Improve readability of Nodes
 			temp = u
 			u = v
 			v = temp
@@ -96,15 +116,31 @@ def compileGraph(fileName):
 	
 	return(graph)
 
-##
-def traceback(start,node):
-		totalWeight = 0
+'''
+	@desc	List the files in a specified directory
+	@param	pathName	- The STRING path (absolute or relative) of the directory
+'''
+def listDir(pathName):
+	try:
+		print('__Listing all files in Test Directory__\n')
 
-		return(totalWeight)
+		i = int (0)
+		for line in os.listdir(pathName):
+			v = line.split('.csv')[0]
+			i += int(1)
+			print('\t%s' % v)
 
-##
+		print('\n')
+	except:
+		print('Cannot access \'os\' module.  It is safe to ignore this warning.')
+
+'''
+	@desc	Dijkstra function receives a Graph object, and finds the Shortest Path
+			Tree from the node that was also passed in.
+	@param	g		- The Graph object
+			stNd	- The Starting Node for SPT Calculation
+'''
 def Dijkstra(g,stNd):
-	#known = False
 	allKnown = False
 	lookFor = 0
 
@@ -119,54 +155,48 @@ def Dijkstra(g,stNd):
 	g.shortPathTree.via[stNd - 1] = 'SELF'
 	g.shortPathTree.known[stNd - 1] = True
 
-	# Loop through list of lists looking for point 1 then point 2
+	# Loop through list of lists looking for point 1; point 2...
 	# Add weights as passing through points
 	# If found, record total weight, add to SPT
 	# If end of list found, look for next point
 
 	for i in range(g.nodes * 2):
-	#while lookFor < g.nodes + 1:
-	#while not allKnown:
-		lookFor += 1	# The Node we are looking for
+		currNode = 0		# The Node we are currently examining
+		nextNode = 0
+		lookFor += 1		# The Node we are looking for
 		if lookFor == g.nodes + 1:
 		  	lookFor = 1
 		if lookFor == stNd:	# Don't look for shortest path to SELF
 			continue
-		currNode = 0	# The Node we are currently examining
-		nextNode = 0
 		
 		for fr in g.connections:				# For each vertex
-			#print('Looking for Node %r' % lookFor)
 			searchWeight = 0
 			currNode += 1
 			if lookFor == stNd:					# Don't look for shortest path to SELF
 	 			continue
 			fr.sort(key=attrgetter('weight'))	# Sort list so shortest is First
 			for to in fr:						# For every vertex connected to 'fr'
-				#print('Looking for Node %r in %r->%r' % (lookFor,currNode,to.nodeTo))
 				nextNode = to.nodeTo
-				if currNode == lookFor:
-					temp = nextNode
-					nextNode = currNode
+				
+				if currNode == lookFor:			# Swap 'from' and 'to' when looking
+					temp = nextNode				# for a node currently assigned to
+					nextNode = currNode			# 'from'
 					currNode = temp
-				#print('\nLooking for Node %r in %r->%r' % (lookFor,currNode,to.nodeTo))
-				#print('At Node [%s]' % to.toString())
+				
 				if((nextNode == lookFor)):
-					# ADD A NEW ENTRY TO THE SPT
 					if not g.shortPathTree.known[nextNode - 1]:
-						#print('ShPt to Node %r IS NOT known' % int(nextNode))
-						if((to.weight + g.shortPathTree.distance[currNode - 1]) < (g.shortPathTree.distance[nextNode - 1])):
-							#print('The Path via Node %r: %r is shorter than %r' % (currNode,(to.weight + int(g.shortPathTree.distance[currNode - 1])),(g.shortPathTree.distance[nextNode - 1])))
+						if((to.weight + g.shortPathTree.distance[currNode - 1]) <	# If the Path weight is less
+							(g.shortPathTree.distance[nextNode - 1])):				# than the current Shortest Path
+							
+							# Update the Shortest Path
 							g.shortPathTree.distance[nextNode - 1] = (to.weight + int(g.shortPathTree.distance[currNode - 1]))
 							g.shortPathTree.via[nextNode - 1] = currNode
-							#g.shortPathTree.known[nextNode - 1] = True
 						else:
+							# Do nothing
 							pass
-							#print('The Path via Node %r: %r is not shorter than %r' % (currNode,(to.weight + g.shortPathTree.distance[currNode - 1]),(g.shortPathTree.distance[nextNode - 1])))
 					else:
+						# Do nothing
 						pass
-						#print('ShPt to Node %r IS known' % int(nextNode))
-		#g.shortPathTree.known[lookFor - 1] = True
 
 		# Check for Completeness
 		for ent in g.shortPathTree.known:
@@ -174,5 +204,3 @@ def Dijkstra(g,stNd):
 				ent = True
 				break
 			allKnown = True
-		#g.shortPathTree.debugTree()
-		#print('---\n')

@@ -11,19 +11,22 @@ import GraphTools
 def __main__():
 	print('************************************************************')
 	print('* Welcome to \'Dijkstra\'s Minimum Spanning Tree\' Algorithm. *')
-	print('************************************************************\n\n')
+	print('************************************************************\n')
 
 	valid = False
 	root = -GraphTools.math.inf
 
 	while(not valid):
 		try:
+			GraphTools.listDir('testFiles\\')
+		except:
+			print('ERROR: Could not access os module.\nIt is safe to ignore this warning.\n')
+		try:
 			fileName = input('Please enter the name of the test file that you wish to use:\n>>')
-			#fileName = 'test'
 			graph = GraphTools.compileGraph('testFiles\\%s' % fileName)
 			valid = True
 		except:
-			print('No such file')
+			print('No such file: %s.csv' % fileName)
 			valid = False
 
 	valid = False
@@ -34,9 +37,6 @@ def __main__():
 		except:
 			print('\n\nERROR: Invalid input.\n')
 			valid = False
-
-	#graph.listConns()
-	#graph.shortPathTree.debugTree()
 
 	GraphTools.Dijkstra(graph,root)
 	graph.shortPathTree.listTree()
