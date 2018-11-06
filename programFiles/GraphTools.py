@@ -172,6 +172,8 @@ def Dijkstra(g,stNd):
 		for fr in g.connections:				# For each vertex
 			searchWeight = 0
 			currNode += 1
+			if currNode == g.nodes + 1:
+			  	currNode = 1
 			if lookFor == stNd:					# Don't look for shortest path to SELF
 	 			continue
 			fr.sort(key=attrgetter('weight'))	# Sort list so shortest is First
