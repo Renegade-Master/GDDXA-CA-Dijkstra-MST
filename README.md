@@ -2,6 +2,7 @@ Contents:
 	1 - Requirements
 	2 - How to Use
 		2.1 - Executing the Program
+		2.2 - Using your own test files
 
 ##################################################
 ##	1	REQUIREMENTS							##
@@ -37,7 +38,25 @@ Contents:
 	2.1.3	Navigate to the directory that my
 			'programFiles' are located.
 	
-	2.1.4	Type 'python minSpanTree.py' to start
+	2.1.4	Type 'python main.py' to start
 			the Program.
 
 	2.1.5	Follow the on-screen instructions.
+
+2.2 - Using your own test files
+
+	The program comes with one pre-written graph
+	located at '\programFiles\testFiles'.
+	You can run your own graph files through the
+	program by following these steps:
+	
+	2.2.1	Ensure that the graph file that you
+			want to use is in the same format
+			as the example file.
+			
+	2.2.2	Once the file is formatted correctly,
+			move it into the same directory that
+			the example file is located.
+			
+	2.2.3	Run the program, and your file should
+			be listed alongside the test file.
